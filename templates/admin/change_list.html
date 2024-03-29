@@ -1,0 +1,36 @@
+{% extends "admin/change_list.html" %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <style>
+        /* 自定义样式 */
+
+        /* 表格样式 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Arial, sans-serif;
+        }
+
+        /* 表头样式 */
+        th {
+            {#background-color: #eae9e9;#}
+             color: #000; /* 将字体颜色改为黑色 */
+            padding: 10px;
+            text-align: left;
+            font-weight: bold;
+            border-bottom: 1px solid #ccc;
+        }
+
+        /* 单元格样式 */
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        /* 鼠标悬停样式 */
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+{% endblock %}

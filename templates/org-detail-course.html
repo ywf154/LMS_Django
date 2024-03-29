@@ -1,0 +1,34 @@
+{% extends "org_detail_base.html" %}
+{% block title %}课程介绍{% endblock %}
+{% block branch %}
+
+    <h1>{{ org.name }}</h1>
+    {% for course in org.course_set.all %}
+        <div>
+            <div>
+                <div>
+                    <img src="{{ MEDIA_URL }}{{ course.image }}" alt="课程封面"/>
+                </div>
+                
+                <ul>
+                    <li><p>{{ course.name }}</p></li>
+                </ul>
+            </div>
+            
+            <div>
+                {{ course.detail }}
+            </div>
+        </div>
+
+
+    {% endfor %}
+
+
+
+
+
+
+
+
+
+{% endblock %}

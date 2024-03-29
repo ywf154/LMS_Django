@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}课程列表{% endblock %}
+
+
+{% block content %}
+
+    <div class="bread">
+        <ul class="nav-list">
+            <a href="{% url 'index' %}">首页</a>>
+            <a href="{% url 'CourseList' %}">课程</a>
+        </ul>
+    </div>
+
+
+    <!-- 排序 -->
+    <div>
+        <ul class="nav-list">
+            <li {% if sort == "" %} class="active" {% endif %} style="display: inline;">
+                <a href="?categ={{ categ }}&tag={{ tag }}&sort=">全部</a>
+            </li>
+
+            <li {% if sort == "students" %} class="active" {% endif %} style="display: inline;">
+                <a href="?categ={{ categ }}&tag={{ tag }}&sort=students">学习人数</a>
+            </li>
+
+            <li {% if sort == "course_nums" %} class="active" {% endif %} style="display: inline;">
+                <a href="?categ={{ categ }}&tag={{ tag }}&sort=course_nums">收藏数</a>
+            </li>
+        </ul>
+
+    </div>
+
+    {#课程列表#}
+
+    <div class="ListCard">
+        {% for course in courses %}
+            <div>
+                <a href="{% url 'CourseDetail' course.id %}">
+                    <img src="{{ MEDIA_URL }}{{ course.image }}" class="card-img-top" alt="课程封面图片">
+                </a>
+                <section>
+                    <h3>{{ course.name }}</h3>
+                    <h4>机构：<strong>{{ course.org }}</strong></h4>
+                    <h4>教师：<strong>{{ course.teacher }}</strong></h4>
+                    <h4>课程描述：<strong>{{ course.desc }}</strong></h4>
+
+                </section>
+            </div>
+        {% endfor %}
+    </div>
+
+
+    <!-- 分页 -->
+
+    <div class="pagination-container">
+        <nav aria-label="Page navigation">
+            <ul class="pagination pagination-lg">
+                {% if courses.has_previous %}
+                    <li>
+                        <a href="?page={{ courses.previous_page_number }}&categ={{ categ }}&tag={{ tag }}&sort={{ sort }}">上一页</a>
+                    </li>
+                {% endif %}
+
+                {% for thispage in courses.paginator.page_range %}
+                    <li>
+                        <a href="?page={{ thispage }}&categ={{ categ }}&tag={{ tag }}&sort={{ sort }}">{{ thispage }}</a>
+                    </li>
+                {% endfor %}
+
+                {% if courses.has_next %}
+                    <li>
+                        <a href="?page={{ courses.next_page_number }}&categ={{ categ }}&tag={{ tag }}&sort={{ sort }}">下一页</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+
+
+
+
+
+
+
+{% endblock %}

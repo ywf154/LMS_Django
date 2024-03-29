@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}我的课程{% endblock %}
+{% block content %}
+    <div>
+        <a href="/"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true">返回主页</a>
+    </div>
+
+    <div><h1>收藏的机构</h1></div>
+    <div class="ListCard">
+        {% for org in fav_orgs %}
+            <div>
+                <a href="{% url 'OrgDetail' org.id %}">
+                    <img src="{{ MEDIA_URL }}{{ org.image }}" class="card-img-top" alt="机构封面图片">
+                </a>
+                <section>
+                    <h3 class="card-title">{{ org.name }}</h3>
+                    <h4 class="card-text">地区：<strong>{{ org.city }}</strong></h4>
+                    <h4 class="card-text">学习人数：<strong>{{ org.course_nums }}</strong></h4>
+                    <h4 class="card-text">课程数：<strong>{{ org.students }}</strong></h4>
+                    <a href="{% url 'deleteFav' org.id %}">删除</a>
+                </section>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div><h1>收藏的课程</h1></div>
+    <div class="ListCard">
+        {% for course in fav_courses %}
+            <div>
+                <a href="{% url 'CourseDetail' course.id %}">
+                    <img src="{{ MEDIA_URL }}{{ course.image }}" class="card-img-top" alt="课程封面图片">
+                </a>
+                <section>
+                    <h3>{{ course.name }}</h3>
+                    <h4>机构：<strong>{{ course.org }}</strong></h4>
+                    <h4>教师：<strong>{{ course.teacher }}</strong></h4>
+                    <h4>课程描述：<strong>{{ course.desc }}</strong></h4>
+                    <a href="{% url 'deleteFav' course.id %}">删除</a>
+                </section>
+            </div>
+        {% endfor %}
+    </div>
+
+
+{% endblock %}

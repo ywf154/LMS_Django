@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ course.name }}-学习界面{% endblock %}
+
+{% block content %}
+    <!-- 面包屑-->
+    <div class="bread">
+        <ul>
+            <li><a href="{% url 'index' %}">首页</a></li>
+            <li><a href="{% url 'CourseList' %}">课程列表</a></li>
+            <li><a href="{% url 'CourseDetail_start' course.id %}">课程门户</a></li>
+            <li>
+                <a href="{% url 'Course_learn' course.id lesson.id content.id %}">{{ content.lesson }}--{{ content.name }}</a>
+            </li>
+        </ul>
+    </div>
+
+    <div style="display: flex">
+        <div class="learnCard">
+            <div class="learnTitle">
+                <a href="{% url 'CourseDetail_start' course.id %}">
+                    <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>返回
+                </a>
+                <h3>
+                    {{ content.name }}
+                </h3>
+            </div>
+            <div class="learning">
+                {{ content.learning_space|safe }}
+            </div>
+        </div>
+
+        <div class="right-card">
+            <div class="fileDown">
+                <h3>课程及作业</h3>
+            </div>
+            {% if content.file %}
+                <div class="fileDown">
+                    <a href="{{ content.file.url }}" target="_blank">
+                        <span class="glyphicon glyphicon-save" aria-hidden="true"></span>课件：{{ content.name }}
+                    </a>
+                </div>
+            {% endif %}
+
+            <div class="fileDown">
+                <a href="{% url 'task' course.id lesson.id content.id %}">
+                    <span class="glyphicon glyphicon-open" aria-hidden="true"></span>提交作业
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}

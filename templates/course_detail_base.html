@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}机构首页{% endblock %}
+{% block content %}
+
+
+    <div class="bread">
+        <ul>
+            <li><a href="{% url 'index' %}">首页</a></li>
+            <li><a href="{% url 'CourseList' %}">课程列表</a></li>
+            <li><a href="{% url 'CourseDetail' course_id %}">课程门户</a></li>
+        </ul>
+    </div>
+
+
+    <!-- 信息-->
+    <div class="Detail">
+        <div class="Img">
+            <img src="{{ MEDIA_URL }}{{ course.image }}">
+        </div>
+        <div>
+            <div class="nameH50">
+                <h3>{{ course.name }}</h3>
+            </div>
+            <div class="H150">
+                <div>
+                    <h4>机构：{{ course.org }}</h4>
+                    <h4>描述：{% if course.desc %}{{ course.desc }}{% endif %}</h4>
+                    <h4>课程类别：{{ course.category }}</h4>
+                </div>
+
+                <div>
+                    <h4>学习人数：{{ student_count }}</h4>
+                    <h4>章节数：{{ content_count }}</h4>
+                    <h4>收藏数：{{ fav_count }}</h4>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 导航-->
+    <div class="nav4">
+        <ul>
+            <li><a href="{% url 'CourseDetail' course_id %} ">
+                <span class="glyphicon glyphicon-home" aria-hidden="true"></span><span>课程首页</span>
+            </a></li>
+            <li><a href="{% url 'CourseDetail_desc' course_id %}">
+                <span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span><span>课程介绍</span>
+            </a></li>
+            <li><a href="{% url 'CourseDetail_teacher' course_id %}">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span><span>课程教师</span>
+            </a></li>
+            <li id="fav">
+                <a>
+                    {% if fav %}
+                        <span class="glyphicon glyphicon-eye-close"></span><span>取消收藏</span>
+                    {% else %}
+                        <span class="glyphicon glyphicon-heart" style="color: #c12e2a"></span><span style="color: #c12e2a">收藏</span>
+                    {% endif %}
+                </a>
+            </li>
+            <li><a href="{% url 'CourseDetail_start' course_id %}">
+                <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span><span>开始学习</span>
+            </a></li>
+        </ul>
+    </div>
+
+    {% block branch %}
+    {% endblock %}
+
+
+    <script>
+        $('#fav').click(function () {
+            var fav_id = {{ course.id }};
+            var fav_type = 2;
+            $.ajax({
+                type: 'GET',
+                url: '{% url 'user_fav' %}',
+                data: {fav_id: fav_id, fav_type: fav_type},
+                success: function () {
+                }
+            });
+            location.reload();
+        });
+    </script>
+
+
+
+{% endblock %}

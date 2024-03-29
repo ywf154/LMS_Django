@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block title %}课程机构{% endblock %}
+
+
+
+{% block content %}
+
+
+
+    <div class="bread">
+        <ul>
+            <li><a href="{% url 'index' %}">首页</a></li>
+            <li><a href="{% url 'OrganizationsView' %}">机构</a></li>
+        </ul>
+    </div>
+
+    <!--筛选、排序-->
+    <div>
+        <!--筛选-->
+        <div>
+            <ul class="nav-list">
+                <li>机构类别</li>
+                <li {% if categ == '' %} class="active" {% endif %}>
+                    <a href="?categ=&city={{ cityid }}&sort={{ sort }}">全部 </a>
+                </li>
+                <li {% if categ == 'pxjg' %} class="active" {% endif %}>
+                    <a href="?categ=pxjg&city={{ cityid }}&sort={{ sort }}">培训机构</a>
+                </li>
+                <li {% if categ == 'gx' %} class="active" {% endif %}>
+                    <a href="?categ=gx&city={{ cityid }}&sort={{ sort }}">高校</a>
+                </li>
+                <li {% if categ == 'gr' %} class="active" {% endif %}>
+                    <a href="?categ=gr&city={{ cityid }}&sort={{ sort }}">个人</a>
+                </li>
+            </ul>
+            <ul class="nav-list">
+                <li>所在地区</li>
+                <li {% if cityid == '' %} class="active" {% endif %}>
+                    <a href="?categ={{ categ }}&city=&sort={{ sort }}">全部</a>
+                </li>
+                {% for city in all_citys %}
+                    <li {% if cityid == city.id|stringformat:"i" %} class="active" {% endif %}>
+                        <a href="?cityid={{ city.id }}&categ={{ categ }}&sort={{ sort }}">{{ city.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <!-- 排序 -->
+        <div>
+            <ul class="nav-list">
+                <li>排序&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                <li {% if sort == "" %} class="active" {% endif %}>
+                    <a href="?categ={{ categ }}&cityid={{ cityid }}&sort=">全部</a>
+                </li>
+
+                <li {% if sort == "course_nums" %} class="active" {% endif %}>
+                    <a href="?categ={{ categ }}&cityid={{ cityid }}&sort=course_nums">
+                        {% if sort == "course_nums" %} 课程门数&#9660; {% else %} 课程门数 {% endif %}
+                    </a>
+                </li>
+
+                <li {% if sort == "students" %} class="active" {% endif %}>
+                    <a href="?categ={{ categ }}&cityid={{ cityid }}&sort=students">
+                        {% if sort == "students" %} 学习人数&#9660; {% else %} 学习人数 {% endif %}
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <!--课程列表-->
+    <div class="ListCard">
+        {% for org in orgs %}
+            <div>
+                <a href="{% url 'OrgDetail' org.id %}">
+                    <img src="{{ MEDIA_URL }}{{ org.image }}" class="card-img-top" alt="机构封面图片">
+                </a>
+                <section>
+                    <h3 class="card-title">{{ org.name }}</h3>
+                    <h4 class="card-text">地区：<strong>{{ org.city }}</strong></h4>
+                    <h4 class="card-text">学习人数：<strong>{{ org.course_nums }}</strong></h4>
+                    <h4 class="card-text">课程数：<strong>{{ org.students }}</strong></h4>
+                </section>
+            </div>            
+        {% endfor %}
+    </div>
+    <!-- 分页 -->
+
+    <div class="pagination-container">
+        <nav aria-label="Page navigation">
+            <ul class="pagination pagination-lg">
+                {% if orgs.has_previous %}
+                    <li>
+                        <a href="?page={{ orgs.previous_page_number }}&categ={{ categ }}&cityid={{ cityid }}&sort={{ sort }}">上一页</a>
+                    </li>
+                {% endif %}
+
+                {% for thispage in orgs.paginator.page_range %}
+                    <li>
+                        <a href="?page={{ thispage }}&categ={{ categ }}&cityid={{ cityid }}&sort={{ sort }}">{{ thispage }}</a>
+                    </li>
+                {% endfor %}
+
+                {% if orgs.has_next %}
+                    <li>
+                        <a href="?page={{ orgs.next_page_number }}&categ={{ categ }}&cityid={{ cityid }}&sort={{ sort }}">下一页</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+
+{% endblock %}

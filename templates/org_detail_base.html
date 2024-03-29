@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %}机构首页{% endblock %}
+{% block content %}
+
+
+    <div class="bread">
+        <ul>
+            <li><a href="{% url 'index' %}">首页</a></li>
+            <li><a href="{% url 'OrganizationsView' %}">机构</a></li>
+            <li><a href="{% url 'OrgDetail' org.id %}">机构详情</a></li>
+        </ul>
+    </div>
+
+    <!-- 机构基本信息-->
+
+    <div class="Detail">
+        <div class="Img">
+            <img src="{{ MEDIA_URL }}{{ org.image }}" alt="机构封面">
+        </div>
+        <div>
+            <div class="nameH50">
+                <h3>{{ org.name }}</h3>
+            </div>
+
+            <div class="H150">
+                <div>
+                    <h4>城市:<strong>{{ org.city }}</strong></h4>
+                    <h4>机构类别:<strong>{{ org.category }}</strong></h4>
+                    <h4>机构标签:<strong>{{ org.tag }}</strong></h4>
+                    <h4>机构地址:<strong>{{ org.address }}</strong></h4>
+                </div>
+                <div>
+                    <h4>课程数:<strong>{{ course_count }}</strong></h4>
+                    <h4>收藏数:<strong>{{ fav_count }}</strong></h4>
+                    <h4>学习人数:<strong>{{ org.students }}</strong></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 导航-->
+    <div class="nav4">
+        <ul>
+            <li><a href="{% url 'OrgDetail_home' org_id %} ">
+                <span class="glyphicon glyphicon-home" aria-hidden="true"></span><span>机构首页</span>
+            </a></li>
+            <li><a href="{% url 'OrgDetail_desc' org_id %}">
+                <span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span><span>机构介绍</span>
+            </a></li>
+            <li><a href="{% url 'OrgDetail_course' org_id %}">
+                <span class="glyphicon glyphicon-book" aria-hidden="true"></span><span>机构课程</span>
+            </a></li>
+            <li><a href="{% url 'OrgDetail_teacher' org_id %}">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span><span>机构教师</span>
+            </a></li>
+            <li id="fav">
+                <a>
+                    {% if fav %}
+                        <span class="glyphicon glyphicon-eye-close"></span><span>取消收藏</span>
+                    {% else %}
+                        <span class="glyphicon glyphicon-heart" style="color: #c12e2a"></span><span style="color: #c12e2a">收藏</span>
+                    {% endif %}
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+
+    {% block branch %}
+    {% endblock %}
+
+
+
+
+
+    <script>
+        $('#fav').click(function () {
+            var fav_id = {{ org.id }};
+            var fav_type = 1;
+            $.ajax({
+                type: 'GET',
+                url: '{% url 'user_fav' %}',
+                data: {fav_id: fav_id, fav_type: fav_type},
+                success: function () {
+                }
+            });
+            location.reload();
+        });
+    </script>
+{% endblock %}

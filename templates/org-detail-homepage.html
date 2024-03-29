@@ -1,0 +1,38 @@
+{% extends "org_detail_base.html" %}
+{% block title %}{{ org.name }}详情{% endblock %}
+{% block branch %}
+
+
+
+    <div>
+        {{ org.desc|safe }}
+    </div>
+
+
+
+    {% for course in org.course_set.all %}
+        <div>
+            <div>
+                <img style="height: 200px;width: 200px;" src="{{ MEDIA_URL }}{{ course.image }}" alt="课程封面"/>
+            </div>
+
+            <div>
+                <ul>
+                    <li><p>{{ course.name }}</p></li>
+                    <li><p></p></li>
+                    <li><p></p></li>
+
+                </ul>
+            </div>
+        </div>
+    {% endfor %}
+    
+
+    {% for teacher in org.teacher_set.all %}
+        <div>
+            {{ teacher.name }}
+        </div>
+    {% endfor %}
+
+
+{% endblock %}

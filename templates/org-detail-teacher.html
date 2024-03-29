@@ -1,0 +1,12 @@
+{% extends "org_detail_base.html" %}
+{% block title %}课程介绍{% endblock %}
+{% block branch %}
+
+    <div>
+        {% for teacher in org.teacher_set.all %}
+            {{ teacher.name }}
+        {% endfor %}
+    </div>
+
+
+{% endblock %}

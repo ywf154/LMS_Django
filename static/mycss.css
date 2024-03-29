@@ -1,0 +1,375 @@
+.active1 {
+    background: #ee2a2a;
+}
+
+.body {
+    background: #ffffff;
+}
+
+/*横向导航*/
+.nav-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.nav-list li {
+    display: inline;
+    margin-right: 10px;
+}
+
+.nav-list a {
+    display: inline;
+    margin-right: 10px;
+}
+
+.nav-list li a {
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.nav-list li.active a {
+    background-color: #ccc;
+}
+
+
+.card-img-top {
+    width: 200px; /* 设置封面图片的宽度 */
+    height: 150px; /* 设置封面图片的高度 */
+    object-fit: cover; /* 调整图片比例以填充整个容器 */
+}
+
+@media (max-width: 1200px) {
+    .col-md-3 {
+        flex-basis: 25%;
+        max-width: 25%;
+    }
+}
+
+@media (max-width: 992px) {
+    .col-md-3 {
+        flex-basis: 33.33%;
+        max-width: 33.33%;
+    }
+}
+
+@media (max-width: 768px) {
+    .col-md-3 {
+        flex-basis: 50%;
+        max-width: 50%;
+    }
+}
+
+@media (max-width: 576px) {
+    .col-md-3 {
+        flex-basis: 100%;
+        max-width: 100%;
+    }
+}
+
+
+/*分页*/
+.pagination-container {
+    display: flex;
+    justify-content: center; /* 设置容器内容水平居中 */
+}
+
+
+.table-container {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.table-container table {
+    border-collapse: collapse;
+}
+
+.table-container th,
+.table-container td {
+    padding: 5px 10px;
+    border: none;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table-container th {
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+
+/*面包屑*/
+.bread {
+    padding: 0 .5rem;
+    height: 40px;
+}
+
+.bread ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.bread li:not(:last-child)::after {
+    display: inline-block;
+    margin: 0 .25rem;
+    content: ">";
+}
+
+
+/*卡片容器*/
+.ListCard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 10px;
+    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(5px);
+    overflow: hidden;
+}
+
+
+.ListCard div:hover {
+    transform: translate(0, -5px);
+    transition-delay: 0s !important;
+}
+
+.ListCard div {
+    flex: 0 0 300px;
+    margin: 10px;
+    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(5px);
+    overflow: hidden;
+}
+
+.ListCard div a img {
+    margin: 5px 50px;
+    width: 200px;
+    height: 200px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+}
+
+.ListCard div section {
+    margin: 5px;
+
+}
+
+.ListCard div section h3 {
+    font-size: 2.4em;
+    text-align: center;
+    margin: 10px 5px 5px;
+    white-space: nowrap; /* 禁止换行 */
+    overflow: hidden; /* 超出部分隐藏 */
+    text-overflow: ellipsis; /* 超出部分以省略号显示 */
+}
+
+.ListCard div section h4 {
+    font-size: 1.2em;
+    font-weight: 300;
+    margin: 10px 5px 5px 5px;
+    text-align: left;
+}
+
+.Detail {
+    background-image: url("data:image/jpeg;base64,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");
+    display: flex;
+    justify-content: left;
+    margin: 5px;
+    width: auto;
+    height: 220px;
+    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.Img img {
+    width: 200px;
+    height: 200px;
+    margin: 10px;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(3px);
+}
+
+.nameH50 {
+    width: auto;
+    height: 50px;
+    flex: 1;
+    justify-content: center;
+}
+
+.nameH50 h3 {
+    font-size: 4em;
+    font-weight: 500;
+}
+
+.H150 {
+    margin: 10px;
+    display: flex;
+    height: 150px;
+}
+
+.H150 div {
+    width: 400px;
+}
+
+.H150 div h4 {
+    font-size: 1.5em;
+    font-weight: 500;
+
+}
+
+
+.nav4 ul {
+    background-color: #f2f2f2; /* 设置背景色 */
+    padding: 10px; /* 设置内边距 */
+}
+
+.nav4 ul li {
+    display: inline-block; /* 横向排列列表项 */
+    margin-right: 10px; /* 设置列表项之间的右侧间距 */
+}
+
+.nav4 ul li a {
+    display: inline-block; /* 将链接元素转换为块级元素，使其占据整个列表项的空间 */
+    padding: 5px 10px; /* 设置链接内边距 */
+    text-decoration: none; /* 去除链接的下划线 */
+    color: #333; /* 设置链接文字颜色 */
+    transition: background-color 0.3s, color 0.3s; /* 添加过渡效果 */
+}
+
+.nav4 ul li a:hover {
+    background-color: #43d292; /* 设置鼠标悬停时的背景色 */
+    color: #e84242; /* 设置鼠标悬停时的文字颜色 */
+}
+
+.left-card {
+    margin-left: 10px;
+    float: left;
+    width: 230px;
+
+}
+
+.right-card {
+    margin-right: 10px;
+    float: right;
+    width: 230px;
+}
+
+.chapter-div {
+    margin-left: 250px;
+    margin-right: 250px;
+}
+
+.chapter-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.chapter-list h3 {
+    margin-top: 20px;
+}
+
+.lessonTitle {
+    background: #eee2e2;
+    color: #000000;
+    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(2px);
+}
+
+.lessonTitle h3 {
+    margin: 20px 5px;
+    font-size: 4em;
+    font-weight: 500;
+}
+
+.contentTitle {
+    background: #ffffff;
+    color: #e84242;
+}
+
+.contentTitle h4:hover {
+    margin: 20px 5px;
+    height: 40px;
+    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.contentTitle h4 {
+    margin: 20px 5px;
+    height: 50px;
+    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(2px);
+    font-size: 2em;
+    font-weight: 400;
+}
+
+.learnCard {
+    flex: 1;
+    margin-left: 10px;
+    margin-right: 10px;
+    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(1px);
+}
+
+.learning {
+    display: flex;
+    justify-content: center; /* 设置容器内容水平居中 */
+    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.4);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(3px);
+}
+
+.learnTitle {
+    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(1px);
+}
+
+.fileDown {
+    display: flex;
+    height: 50px;
+    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.4);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(3px);
+}
+.fileDown a {
+    font-size: 1.5em;
+    text-align: center;
+    margin-left: 15px;
+    margin-top: 5px;
+    white-space: nowrap; /* 禁止换行 */
+    overflow: hidden; /* 超出部分隐藏 */
+    text-overflow: ellipsis; /* 超出部分以省略号显示 */
+}
+.fileDown h3 {
+    font-size: 1.5em;
+    text-align: center;
+    margin-left: 50px;
+    margin-top: 15px;
+
+
+
+}
