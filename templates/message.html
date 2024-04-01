@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}个人中心{% endblock %}
+{% block content %}
+    <div>
+        <a href="/">
+            <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>返回</a>
+    </div>
+    <div>
+        <img src="./../media/{{ headImg }}"/>
+    </div>
+    <div>{{ user.username }}</div>
+{% endblock %}
