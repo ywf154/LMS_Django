@@ -1,21 +1,25 @@
 {% extends 'base.html' %}
 {% block title %}修改个人信息{% endblock %}
 {% block content %}
-{% if users != None %}
-<h5 style="color: #ecf0f1">List of users</h5>
-{% for user in users %} {% endfor %} {% endif %}
-<form action="" method="post" class="form-control  ">
-  {% csrf_token %}
-  {% if form.non_field_errors %}
-  {% for error in form.non_field_errors %}
-  <p>{{ error }}</p>
-  {% endfor %}
-  {% endif %}
-  {% for fm in form %}
-  {{ fm.label_tag }}
-  {{ fm }}
-  {{fm.errors|striptags }}<br /><br />
-  {% endfor %}
-  <input type="submit" value="修改" class="btn btn-primary" />
-</form>
+    <div>
+        <a href="/">
+            <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>返回</a>
+    </div>
+    {% if users != None %}
+        <h5 style="color: #ecf0f1">List of users</h5>
+        {% for user in users %} {% endfor %} {% endif %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+        {% for fm in form %}
+            {{ fm.label_tag }}
+            {{ fm }}
+            {{ fm.errors|striptags }}<br/><br/>
+        {% endfor %}
+        <input type="submit" value="修改" class="btn btn-primary"/>
+    </form>
 {% endblock %}

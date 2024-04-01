@@ -116,13 +116,7 @@ class UserFav(View):
         fav_orgs = [CourseOrg.objects.filter(id=CFav.fav_id).first() for CFav in fav_orgs]
         fav_courses = [Course.objects.filter(id=OFav.fav_id).first() for OFav in fav_courses]
         return render(request, 'userFav.html', locals())
-# class UserFav(View):
-#     def get(self, request, *args, **kwargs):
-#         fav_org_ids = UserFavorite.objects.filter(user=request.user, fav_type=1).values_list('fav_id', flat=True)
-#         fav_course_ids = UserFavorite.objects.filter(user=request.user, fav_type=2).values_list('fav_id', flat=True)
-#         fav_orgs = CourseOrg.objects.filter(id__in=fav_org_ids)
-#         fav_courses = Course.objects.filter(id__in=fav_course_ids)
-#         return render(request, 'userFav.html', locals())
+
 
 class DeleteFav(View):
     def get(self, request, fav_id, *args, **kwargs):

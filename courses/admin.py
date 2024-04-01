@@ -5,7 +5,6 @@ from nested_admin.forms import SortableHiddenMixin
 from nested_admin.nested import NestedModelAdmin, NestedStackedInline
 
 from courses.models import *
-from operations.models import Task
 
 
 class CourseResourceInline(NestedStackedInline, SortableHiddenMixin):
@@ -27,8 +26,14 @@ class LessonInline(NestedStackedInline, SortableHiddenMixin):
     extra = 0
 
 
+class NoticeResourceInline(NestedStackedInline, SortableHiddenMixin):
+    model = Notice
+    fields = ['title', 'content']
+    extra = 0
+
+
 class CourseAdmin(NestedModelAdmin):
-    inlines = [LessonInline, CourseResourceInline]
+    inlines = [NoticeResourceInline, CourseResourceInline, LessonInline]
     extra = 0
     # 这里是多级内联编辑
     collapse_template = 'templates/admin/collapse_nested_inline.html'

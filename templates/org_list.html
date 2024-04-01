@@ -13,10 +13,13 @@
             <li><a href="{% url 'index' %}">首页</a></li>
             <li><a href="{% url 'OrganizationsView' %}">机构</a></li>
         </ul>
+        <a href="{% url 'index' %}">
+            <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>返回
+        </a>
     </div>
 
     <!--筛选、排序-->
-    <div>
+    <div style="margin-top: 10px">
         <!--筛选-->
         <div>
             <ul class="nav-list">
@@ -77,12 +80,15 @@
                     <img src="{{ MEDIA_URL }}{{ org.image }}" class="card-img-top" alt="机构封面图片">
                 </a>
                 <section>
-                    <h3 class="card-title">{{ org.name }}</h3>
+                    <a href="{% url 'OrgDetail' org.id %}">
+                        <h3 class="card-title">{{ org.name }}</h3>
+                    </a>
                     <h4 class="card-text">地区：<strong>{{ org.city }}</strong></h4>
                     <h4 class="card-text">学习人数：<strong>{{ org.course_nums }}</strong></h4>
                     <h4 class="card-text">课程数：<strong>{{ org.students }}</strong></h4>
                 </section>
-            </div>            
+
+            </div>
         {% endfor %}
     </div>
     <!-- 分页 -->

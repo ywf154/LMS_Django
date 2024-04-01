@@ -2,32 +2,33 @@
 {% block title %}{{ org.name }}详情{% endblock %}
 {% block branch %}
 
-
+<div><h2>机构介绍</h2></div>
 
     <div>
         {{ org.desc|safe }}
     </div>
 
+<div><h2>机构课程</h2></div>
 
+        <div class="ListCard">
+            {% for course in org.course_set.all %}
+                <div>
+                    <a href="{% url 'CourseDetail' course.id %}">
+                        <img src="{{ MEDIA_URL }}{{ course.image }}" class="card-img-top" alt="课程封面图片">
 
-    {% for course in org.course_set.all %}
-        <div>
-            <div>
-                <img style="height: 200px;width: 200px;" src="{{ MEDIA_URL }}{{ course.image }}" alt="课程封面"/>
-            </div>
+                        <section>
+                            <h3>{{ course.name }}</h3>
+                            <h4>机构：<strong>{{ course.org }}</strong></h4>
+                            <h4>教师：<strong>{{ course.teacher }}</strong></h4>
+                            <h4>课程描述：<strong>{{ course.desc }}</strong></h4>
 
-            <div>
-                <ul>
-                    <li><p>{{ course.name }}</p></li>
-                    <li><p></p></li>
-                    <li><p></p></li>
-
-                </ul>
-            </div>
+                        </section>
+                    </a>
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
     
-
+<div><h2>机构教师</h2></div>
     {% for teacher in org.teacher_set.all %}
         <div>
             {{ teacher.name }}

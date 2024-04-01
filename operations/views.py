@@ -7,7 +7,7 @@ from django.views import View
 from courses.models import Content, Lesson, Course
 from operations.forms import TaskForm
 
-from operations.models import UserFavorite, Task, UserCourse
+from operations.models import UserFavorite, Task, UserCourse, Banner, UserMessage
 
 
 class User_fav(View):
@@ -72,4 +72,37 @@ class EditTask(View):
         return render(request, 'editTask.html', locals())
 
 
+class Index(View):
+    def get(self, request, *args, **kwargs):
+        banners = Banner.objects.all()
+        return render(request, 'index.html', locals())
 
+
+class Message(View):
+    def get(self, request, *args, **kwargs):
+        user_courses = UserCourse.objects.filter(user=request.user)
+        course_ids = user_courses.values_list('course_id', flat=True)
+        courses = Course.objects.filter(id__in=course_ids)
+        notice_list = [course.notice_set.order_by('-add_time').all() for course in courses]
+        for notices in notice_list:
+            for notice in notices:
+                notice_exist = UserMessage.objects.filter(notice=notice)
+                if not notice_exist:
+                    my_notice = UserMessage(notice=notice, user=request.user)
+                    my_notice.save()
+        my_notices = UserMessage.objects.filter(has_read=0)
+        my_notices_has_read = UserMessage.objects.filter(has_read=1)
+        notice_list = [my_notice.notice for my_notice in my_notices]
+        notice_list_has_read = [my_notice.notice for my_notice in my_notices_has_read]
+        notice_count = len(notice_list)
+        return render(request, 'message.html', locals())
+
+
+class ReadMessage(View):
+    def get(self, request, nid, *args, **kwargs):
+        if nid:
+            message = UserMessage.objects.filter(notice_id=nid).first()
+            message.has_read = True
+            message.save()
+            return redirect('Message')
+        return JsonResponse({'status': 'error', 'msg': '失败'})

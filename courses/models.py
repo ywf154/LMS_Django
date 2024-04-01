@@ -15,7 +15,6 @@ class Course(BaseModel):
     students = models.IntegerField(default=0, verbose_name='学习人数')
     fav_nums = models.IntegerField(default=0, verbose_name='收藏人数')
     click_nums = models.IntegerField(default=0, verbose_name="点击数")
-    notice = models.CharField(verbose_name="课程公告", max_length=300, null=True, blank=True)
     category = models.CharField(default=u"后端开发", max_length=20, verbose_name="课程类别")
     tag = models.CharField(default="", verbose_name="课程标签", max_length=10, null=True, blank=True)
     youneed_know = models.CharField(default="", max_length=300, verbose_name="课程须知", null=True, blank=True)
@@ -45,6 +44,19 @@ class Course(BaseModel):
         return mark_safe("<a href='/course/{}'>跳转</a>".format(self.id))
 
     go_to.short_description = "跳转"
+
+
+class Notice(BaseModel):
+    title = models.CharField(verbose_name="通知标题", max_length=100)
+    course = models.ForeignKey(Course, verbose_name="课程", on_delete=models.CASCADE, null=True)
+    content = UEditorField(verbose_name="课程详情", default='', blank=True, imagePath='course_notice', toolbars="mini",
+                           filePath="course_notice_files/", )
+    class Meta:
+        verbose_name = "课程通知"
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.title
 
 
 class BannerCourse(Course):

@@ -15,6 +15,13 @@ class UserEditForm(UserChangeForm):
     class Meta:
         model = UserProfile
         fields = ('username', 'nick_name', 'gender','email', 'mobile', 'image')
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control','style': 'width:400px;'}),
+            'nick_name': forms.TextInput(attrs={'class': 'form-control', 'style': 'width:400px;'}),
+            'gender': forms.TextInput(attrs={'class': 'form-control', 'style': 'width:50px;'}),
+            'email': forms.TextInput(attrs={'class': 'form-control', 'style': 'width:400px;'}),
+            'mobile': forms.TextInput(attrs={'class': 'form-control', 'style': 'width:400px;'}),
+        }
 
 
 class ChangePwdForm(forms.Form):

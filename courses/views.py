@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from courses.models import Course, Lesson, Content
-from operations.models import UserFavorite, UserCourse
+from operations.models import UserFavorite, UserCourse, CourseComments
 
 
 def get_course_data(course_id, user):
@@ -72,6 +72,8 @@ class CourseDetail_startView(View):
         if course_id:
             course, fav, fav_count, content_count, student_count = get_course_data(course_id, request.user)
             lesson_list = course.lesson_set.all()
+            notices = course.notice_set.all()
+            courseComments = CourseComments.objects.filter(course=course).order_by('-add_time')
         return render(request, "course-detail-start.html", locals())
 
 

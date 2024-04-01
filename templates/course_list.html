@@ -10,11 +10,14 @@
             <a href="{% url 'index' %}">首页</a>>
             <a href="{% url 'CourseList' %}">课程</a>
         </ul>
+        <a href="{% url 'index' %}">
+            <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>返回
+        </a>
     </div>
 
 
     <!-- 排序 -->
-    <div>
+    <div style="margin-top: 10px">
         <ul class="nav-list">
             <li {% if sort == "" %} class="active" {% endif %} style="display: inline;">
                 <a href="?categ={{ categ }}&tag={{ tag }}&sort=">全部</a>
@@ -40,12 +43,15 @@
                     <img src="{{ MEDIA_URL }}{{ course.image }}" class="card-img-top" alt="课程封面图片">
                 </a>
                 <section>
-                    <h3>{{ course.name }}</h3>
+                    <a href="{% url 'CourseDetail' course.id %}">
+                        <h3>{{ course.name }}</h3>
+                    </a>
                     <h4>机构：<strong>{{ course.org }}</strong></h4>
                     <h4>教师：<strong>{{ course.teacher }}</strong></h4>
                     <h4>课程描述：<strong>{{ course.desc }}</strong></h4>
 
                 </section>
+
             </div>
         {% endfor %}
     </div>
