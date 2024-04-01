@@ -17,7 +17,7 @@
                     <h4>机构：<strong>{{ course.org }}</strong></h4>
                     <h4>教师：<strong>{{ course.teacher }}</strong></h4>
                     <h4>课程描述：<strong>{{ course.desc }}</strong></h4>                  
-                        <a href="{% url 'delete_course' course.id %}">删除</a>                                
+                        <a href="{% url 'delete_course' course.id %}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>删除</a>                                
                 </section>
             </div>
         {% endfor %}

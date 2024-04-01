@@ -9,15 +9,28 @@
             <div>
                 <h3><span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>课程须知</h3>
             </div>
-
+            {% for notice in notices %}
+                <div>
+                    {{ notice.title }}
+                </div>
+            {% endfor %}
         </div>
 
 
         <div class="right-card">
-            
+
             <div>
                 <h3><span class="glyphicon glyphicon-comment" aria-hidden="true"></span>课程评论</h3>
             </div>
+        <div>
+            <input type="text" value="输入你的评论" >
+        </div>
+            {% for courseComment in courseComments %}
+                <div>
+                    <p>{{ courseComment.comments }}</p>
+                    <p>--来自：{{ courseComment.user.nick_name }}</p>
+                </div>
+            {% endfor %}
         </div>
 
 

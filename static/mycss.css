@@ -38,7 +38,7 @@
 .card-img-top {
     width: 200px; /* 设置封面图片的宽度 */
     height: 150px; /* 设置封面图片的高度 */
-    object-fit: cover; /* 调整图片比例以填充整个容器 */
+    /*object-fit: cover; !* 调整图片比例以填充整个容器 *!*/
 }
 
 @media (max-width: 1200px) {
@@ -369,7 +369,16 @@
     text-align: center;
     margin-left: 50px;
     margin-top: 15px;
+}
+
+.swiper {
+    width: 600px;
+    height: 300px;
+}
 
 
-
+@keyframes blink {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
 }

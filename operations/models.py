@@ -1,9 +1,11 @@
+from datetime import datetime
+
 from django.db import models
 from DjangoUeditor.models import UEditorField
 from django.contrib.auth import get_user_model
 
 from users.models import BaseModel
-from courses.models import Course, Lesson, Content
+from courses.models import Course, Lesson, Content, Notice
 
 UserProfile = get_user_model()
 
@@ -63,7 +65,7 @@ class UserFavorite(BaseModel):
 
 class UserMessage(BaseModel):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name="用户")
-    message = models.CharField(max_length=200, verbose_name="消息内容")
+    notice = models.ForeignKey(Notice, on_delete=models.CASCADE, verbose_name="来自的通知",default=None)
     has_read = models.BooleanField(default=False, verbose_name="是否已读")
 
     class Meta:

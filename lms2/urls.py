@@ -5,7 +5,7 @@ from django.views.generic import TemplateView
 from lms2 import settings
 from courses.views import CourseView, CourseDetailView, CourseDetail_descView, CourseDetail_teacherView, \
     CourseDetail_startView, Course_learn
-from operations.views import User_fav, task, EditTask
+from operations.views import User_fav, task, EditTask, Index, Message, ReadMessage
 from organizations.views import OrganizationsView, OrgDetailView, OrgDetail_descView, OrgDetail_teacherView, \
     OrgDetail_courseView, OrgDetail_home
 from users.views import LoginView, LogoutView, UserEditView, UserCenterView, RegisterView, ChangePasswordView, \
@@ -14,7 +14,7 @@ from users.views import LoginView, LogoutView, UserEditView, UserCenterView, Reg
 urlpatterns = [
       path('admin/', admin.site.urls),
       # 首页
-      path('', TemplateView.as_view(template_name='index.html'), name='index'),
+      path('', Index.as_view(), name='index'),
       # 用户：
       path('login/', LoginView.as_view(), name='login'),
       path('logout/', LogoutView.as_view(), name='logout'),
@@ -26,6 +26,7 @@ urlpatterns = [
       path('delete_course/<int:fav_id>/', DeleteFav.as_view(), name='deleteFav'),
       path('userCourses/', UserCourses.as_view(), name='userCourses'),
       path('delete_course/<int:cid>/', Delete_course.as_view(), name='delete_course'),
+      path('Message/', Message.as_view(), name='Message'),
       # 机构：
       path('OrgList/', OrganizationsView.as_view(), name='OrganizationsView'),
       path('OrgDetail/<int:org_id>/', OrgDetailView.as_view(), name='OrgDetail'),
@@ -45,6 +46,7 @@ urlpatterns = [
 
       # 操作
       re_path(r'user_fav/$', User_fav.as_view(), name='user_fav'),
+      path('readMessage/<int:nid>/',ReadMessage.as_view(), name='readMessage'),
 
       # 作业
       path('task/<int:cid>/<int:lid>/<int:tid>/', task.as_view(), name='task'),

@@ -19,7 +19,7 @@
             left: 20px;
             height: 200px;
             max-height: 200px;
-            
+
         }
 
         .login-container {
@@ -51,6 +51,7 @@
 </head>
 <body>
 <img src="https://vstu.by/images/logotype/logo_en1.png" alt="Logo" class="logo">
+
 <div class="login-container">
     <form action="" method="post">
         {% csrf_token %}
@@ -70,7 +71,7 @@
             <label class="f-white">
                 <input type="checkbox">记住密码
             </label>
-            <a href="#" class="pull-right forgot">忘记密码</a>
+            <a href="/" class="pull-right forgot">返回首页</a>
         </div>
         <button type="submit" class="btn btn-lg btn-primary btn-block login">登录</button>
     </form>

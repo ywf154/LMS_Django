@@ -17,7 +17,7 @@
                     <h4 class="card-text">地区：<strong>{{ org.city }}</strong></h4>
                     <h4 class="card-text">学习人数：<strong>{{ org.course_nums }}</strong></h4>
                     <h4 class="card-text">课程数：<strong>{{ org.students }}</strong></h4>
-                    <a href="{% url 'deleteFav' org.id %}">删除</a>
+                    <a href="{% url 'deleteFav' org.id %}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>删除</a>
                 </section>
             </div>
         {% endfor %}
@@ -35,7 +35,7 @@
                     <h4>机构：<strong>{{ course.org }}</strong></h4>
                     <h4>教师：<strong>{{ course.teacher }}</strong></h4>
                     <h4>课程描述：<strong>{{ course.desc }}</strong></h4>
-                    <a href="{% url 'deleteFav' course.id %}">删除</a>
+                    <a href="{% url 'deleteFav' course.id %}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>删除</a>
                 </section>
             </div>
         {% endfor %}
