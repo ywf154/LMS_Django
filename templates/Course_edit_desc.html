@@ -1,0 +1,37 @@
+{% extends "Course_edit.html" %}
+{% block title %}{{ course.name }}详情{% endblock %}
+{% block branch %}
+
+
+    <div style="overflow: auto;">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div style="float: left;">
+                <h3 style="  display: inline-block;width: 400px; /* 根据需要设置适当的宽度 */overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+                    <strong>课程封面：</strong>{{ form.image }}</h3>
+                <h3><strong>课程名称：</strong>{{ form.name }}</h3>
+                <h3><strong>课程类别：</strong>{{ form.category }}</h3>
+                <h3><strong>课程描述：</strong>{{ form.desc }}</h3>
+                <h3><strong>课程须知：</strong></h3>
+                <div style="width: 250px; ">{{ form.youneed_know }}</div>
+                <button type="submit" class="btn btn-primary">修改</button>
+            </div>
+            <div style="margin-left: 20px;">
+                {{ form.media }}
+                {{ form.detail }}
+            </div>
+        </form>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

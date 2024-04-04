@@ -2,10 +2,8 @@
 {% block title %}我的课程{% endblock %}
 {% block content %}
     <div>
-        <a href="/"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true">返回主页</a>
+        <a href="/"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>返回主页</a>
     </div>
-
-
     <div class="ListCard">
         {% for course in courses %}
             <div>
@@ -16,12 +14,12 @@
                     <h3>{{ course.name }}</h3>
                     <h4>机构：<strong>{{ course.org }}</strong></h4>
                     <h4>教师：<strong>{{ course.teacher }}</strong></h4>
-                    <h4>课程描述：<strong>{{ course.desc }}</strong></h4>                  
-                        <a href="{% url 'delete_course' course.id %}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>删除</a>                                
+                    <h4>课程描述：<strong>{{ course.desc }}</strong></h4>
+                    <a href="{% url 'delete_course' course.id %}"><span class="glyphicon glyphicon-trash"
+                                                                        aria-hidden="true"></span>删除</a>
                 </section>
             </div>
         {% endfor %}
     </div>
-
 
 {% endblock %}

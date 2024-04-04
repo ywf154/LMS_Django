@@ -5,21 +5,15 @@
         <a href="/">
             <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>返回</a>
     </div>
-    {% if users != None %}
-        <h5 style="color: #ecf0f1">List of users</h5>
-        {% for user in users %} {% endfor %} {% endif %}
-    <form action="" method="post">
+
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {% if form.non_field_errors %}
-            {% for error in form.non_field_errors %}
-                <p>{{ error }}</p>
-            {% endfor %}
-        {% endif %}
-        {% for fm in form %}
-            {{ fm.label_tag }}
-            {{ fm }}
-            {{ fm.errors|striptags }}<br/><br/>
-        {% endfor %}
-        <input type="submit" value="修改" class="btn btn-primary"/>
+        用户名：{{ form.username }}
+        性别：{{ form.gender }}
+        邮箱：{{ form.email }}
+        手机号：{{ form.mobile }}
+        头像： {{ form.image }}
+        {{ formTeacher }}
+        <button type="submit" class="btn btn-primary">修改</button>
     </form>
 {% endblock %}

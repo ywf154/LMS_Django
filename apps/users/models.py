@@ -3,7 +3,7 @@ from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-GENDER_CHOICES = (("male", "男"), ("female", "女"))
+GENDER_CHOICES = (("男", "1"), ("女", "2"))
 
 
 class BaseModel(models.Model):
@@ -14,8 +14,7 @@ class BaseModel(models.Model):
 
 
 class UserProfile(AbstractUser):
-    nick_name = models.CharField(max_length=50, verbose_name="昵称", default="该用户未设置昵称")
-    gender = models.CharField(verbose_name="性别", choices=GENDER_CHOICES, max_length=6, null=True, blank=True)
+    gender = models.CharField(verbose_name="性别", choices=GENDER_CHOICES, max_length=1, null=True, blank=True)
     mobile = models.CharField(max_length=11, verbose_name="手机号码", null=True, blank=True)
     image = models.ImageField(verbose_name="用户头像", upload_to="head_image/%Y/%m", default="default.jpg")
 
@@ -24,10 +23,7 @@ class UserProfile(AbstractUser):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        if self.nick_name:
-            return self.nick_name
-        else:
-            return self.username
+        return self.username
 
     def unread_nums(self):
         # 未读消息数量

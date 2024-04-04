@@ -8,7 +8,7 @@ from organizations.models import Teacher, CourseOrg
 
 class Course(BaseModel):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name="讲师")
-    org = models.ForeignKey(CourseOrg, null=True, blank=True, on_delete=models.CASCADE, verbose_name="课程机构")
+    org = models.ForeignKey(CourseOrg, on_delete=models.CASCADE, verbose_name="课程机构", default=None)
     name = models.CharField(verbose_name="课程名", max_length=50)
     desc = models.CharField(verbose_name="课程描述", max_length=300, null=True, blank=True)
     learn_times = models.IntegerField(default=0, verbose_name="学习时长(分钟数)")
@@ -17,11 +17,12 @@ class Course(BaseModel):
     click_nums = models.IntegerField(default=0, verbose_name="点击数")
     category = models.CharField(default=u"后端开发", max_length=20, verbose_name="课程类别")
     tag = models.CharField(default="", verbose_name="课程标签", max_length=10, null=True, blank=True)
-    youneed_know = models.CharField(default="", max_length=300, verbose_name="课程须知", null=True, blank=True)
+    youneed_know = models.TextField(default="", max_length=300, verbose_name="课程须知", null=True, blank=True)
     detail = UEditorField(verbose_name="课程详情", default='', blank=True, imagePath='course_detail/', toolbars="full",
-                          filePath="course_detail_files/", )
-    image = models.ImageField(upload_to="courses/%Y/%m", verbose_name="封面图", max_length=100)
+                          filePath="course_detail_files/", height=500, width=900)
+    image = models.ImageField(upload_to="courses/%Y/%m", verbose_name="封面图", default='course_images.jpg')
     is_banner = models.BooleanField(default=False, verbose_name="是否宣传")
+    status = models.BooleanField(default=True, verbose_name="课程状态")
 
     class Meta:
         verbose_name = "课程信息"
@@ -50,7 +51,8 @@ class Notice(BaseModel):
     title = models.CharField(verbose_name="通知标题", max_length=100)
     course = models.ForeignKey(Course, verbose_name="课程", on_delete=models.CASCADE, null=True)
     content = UEditorField(verbose_name="课程详情", default='', blank=True, imagePath='course_notice', toolbars="mini",
-                           filePath="course_notice_files/", )
+                           filePath="course_notice_files/", height=150, width=1000)
+
     class Meta:
         verbose_name = "课程通知"
         verbose_name_plural = verbose_name
@@ -64,18 +66,6 @@ class BannerCourse(Course):
         verbose_name = "轮播课程"
         verbose_name_plural = verbose_name
         proxy = True
-
-
-class CourseTag(BaseModel):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name="课程")
-    tag = models.CharField(max_length=100, verbose_name="标签")
-
-    class Meta:
-        verbose_name = "课程标签"
-        verbose_name_plural = verbose_name
-
-    def __str__(self):
-        return self.tag
 
 
 class Lesson(BaseModel):

@@ -93,6 +93,7 @@ class Task(BaseModel):
     content = models.ForeignKey(Content, on_delete=models.CASCADE, verbose_name="所属章节", blank=True, null=True)
     detail = UEditorField(verbose_name="课程编辑", default='', blank=True, imagePath='task/img/',
                           toolbars="full", filePath='task/file/')
+    grade = models.IntegerField(verbose_name="成绩", default=0)
 
     class Meta:
         verbose_name = "作业"

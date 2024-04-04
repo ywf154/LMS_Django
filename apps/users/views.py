@@ -1,27 +1,37 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect, JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import View
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 
+from courses.forms import CourseModelForm
 from courses.models import Course
 from operations.models import UserCourse, UserFavorite
-from organizations.models import CourseOrg
-from .forms import RegistrationForm, UserEditForm, ChangePwdForm
+from organizations.models import CourseOrg, Teacher
+from .forms import RegistrationForm, UserEditForm, ChangePwdForm, TeacherEditForm
 
 
 class UserEditView(View):
     def get(self, request, *args, **kwargs):
         form = UserEditForm(instance=request.user)
-        context = {'form': form}
-        return render(request, 'userEdit.html', context)
+        if request.user.teacher:
+            formTeacher = TeacherEditForm(instance=request.user.teacher)
+        return render(request, 'userEdit.html', locals())
 
     def post(self, request, *args, **kwargs):
         form = UserEditForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            return redirect('index')
+        if request.user.teacher:
+            formTeacher = TeacherEditForm(request.POST, instance=request.user.teacher)
+            if form.is_valid() and formTeacher.is_valid():
+                form.save()
+                formTeacher.save()
+
+                return redirect('index')
+        else:
+            if form.is_valid():
+                form.save()
+                return redirect('index')
         return render(request, 'userEdit.html', locals())
 
 
@@ -111,7 +121,7 @@ class Delete_course(View):
 
 class UserFav(View):
     def get(self, request, *args, **kwargs):
-        fav_orgs = UserFavorite.objects.filter(user=request.user, fav_type=1)
+        fav_orgs = UserFavorite.objects.filter(user_id=request.user.id, fav_type=1)
         fav_courses = UserFavorite.objects.filter(user=request.user, fav_type=2)
         fav_orgs = [CourseOrg.objects.filter(id=CFav.fav_id).first() for CFav in fav_orgs]
         fav_courses = [Course.objects.filter(id=OFav.fav_id).first() for OFav in fav_courses]
@@ -120,7 +130,32 @@ class UserFav(View):
 
 class DeleteFav(View):
     def get(self, request, fav_id, *args, **kwargs):
-        if fav_id:
-            UserFavorite.objects.filter(fav_id=fav_id, user_id=request.user.id).first().delete()
+        user_fav = get_object_or_404(UserFavorite, fav_id=fav_id, user_id=request.user.id)
+        if user_fav:
+            user_fav.delete()
             return redirect('userFav')
         return JsonResponse({'status': 'error', 'msg': '删除失败'})
+
+
+class TeacherZoom(View):
+    def get(self, request, *args, **kwargs):
+        teacher = Teacher.objects.filter(user_id=request.user.id).first()
+        if not teacher:
+            return redirect('index')
+        name = teacher.name
+        courses = Course.objects.filter(teacher_id=teacher.id).order_by('-add_time').all()
+        form = CourseModelForm()
+        return render(request, "teacher_zoom.html", locals())
+
+    def post(self, request, *args, **kwargs):
+        teacher = Teacher.objects.filter(user_id=request.user.id).first()
+        if not teacher:
+            return redirect('index')
+        form = CourseModelForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            category = form.cleaned_data['category']
+            desc = form.cleaned_data['desc']
+            course = Course(name=name, category=category, teacher_id=teacher.id, org_id=teacher.org_id, desc=desc)
+            course.save()
+        return render(request, "teacher_zoom.html", locals())

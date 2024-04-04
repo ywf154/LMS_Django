@@ -1,6 +1,4 @@
 mysqlclient
 pillow
-django-import-export
 django-simpleui
 django-nested-admin
-setuptools

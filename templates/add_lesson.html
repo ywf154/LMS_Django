@@ -1,0 +1,76 @@
+{% extends "Course_edit.html" %}
+{% block title %}添加章节{% endblock %}
+{% block branch %}
+
+    <div>
+        <div class="left-card">
+            <div>
+                <h3><span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>通知列表</h3>
+            </div>
+            <ol>
+                {% for notice in notices %}
+                    <li style="color:#e11515;">{{ notice.title }}</li>
+                    <p style="color:#1556e1;">{{ notice.add_time }} </p>
+                    {{ notice.content|safe }}
+                {% endfor %}
+            </ol>
+        </div>
+
+
+        <div class="right-card">
+            <div>
+                <h3><span class="glyphicon glyphicon-comment" aria-hidden="true"></span>课程评论</h3>
+            </div>
+            {% for courseComment in courseComments %}
+                <div>
+                    <p>{{ courseComment.comments }}</p>
+                    <p>--来自：{{ courseComment.user.username }}</p>
+                    <h5>--<strong>{{ courseComment.add_time }}</strong></h5>
+                </div>
+            {% endfor %}
+        </div>
+
+
+        <div class="chapter-div">
+            {% for lesson in lesson_list %}
+                <div class="chapter-list">
+                    <div class="lessonTitle">
+                        <a href="{% url 'Lesson_edit' lesson.id %}">
+                            <h3><span class="glyphicon glyphicon-tasks" aria-hidden="true"
+                                      style="vertical-align: middle; margin-right: 1px;"></span>{{ lesson.name }}</h3>
+                        </a>
+                        <a href="{% url 'delete_lesson' lesson.id %}">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>删除</a>
+                    </div>
+
+                    <div>
+                        {% for content in lesson.content_set.all %}
+                            <a href="{% url 'Content_edit' content.id %}">
+                                <div>
+
+                                    <h4><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                        {{ content.name }}
+                                    </h4>
+
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+
+            <form method="post" enctype="multipart/form-data">
+                <div style="display: flex;">
+                    {% csrf_token %}
+                    <div style="flex: 1;">{{ form }}</div>
+                    <div>
+                        <button type="submit" class="btn btn-primary">新增</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+{% endblock %}
+

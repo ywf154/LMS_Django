@@ -2,11 +2,13 @@
 {% block title %}{{ course.name }}详情{% endblock %}
 {% block branch %}
 
-
-    <div>
-        {{ course.detail|safe }}
-    </div>
-
+    {% if course.detail %}
+        <div>
+            {{ course.detail|safe }}
+        </div>
+    {% else %}
+        暂无课程介绍
+    {% endif %}
 
 
 

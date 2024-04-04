@@ -44,26 +44,27 @@
     <!-- 导航-->
     <div class="nav4">
         <ul>
-            <li><a href="{% url 'CourseDetail' course_id %} ">
-                <span class="glyphicon glyphicon-home" aria-hidden="true"></span><span>课程首页</span>
+            <li><a href="{% url 'CourseDetail_home' course_id %}">
+                <span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;课程首页
             </a></li>
             <li><a href="{% url 'CourseDetail_desc' course_id %}">
-                <span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span><span>课程介绍</span>
+                <span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>&nbsp;课程介绍
             </a></li>
             <li><a href="{% url 'CourseDetail_teacher' course_id %}">
-                <span class="glyphicon glyphicon-user" aria-hidden="true"></span><span>课程教师</span>
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;课程教师
             </a></li>
             <li id="fav">
                 <a>
                     {% if fav %}
-                        <span class="glyphicon glyphicon-eye-close"></span><span>取消收藏</span>
+                        <span class="glyphicon glyphicon-eye-close"></span>&nbsp;取消收藏
                     {% else %}
-                        <span class="glyphicon glyphicon-heart" style="color: #c12e2a"></span><span style="color: #c12e2a">收藏</span>
+                        <span class="glyphicon glyphicon-heart" style="color: #c12e2a"></span>
+                        <span style="color: #c12e2a">&nbsp;收藏</span>
                     {% endif %}
                 </a>
             </li>
             <li><a href="{% url 'CourseDetail_start' course_id %}">
-                <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span><span>开始学习</span>
+                <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;开始学习
             </a></li>
         </ul>
     </div>

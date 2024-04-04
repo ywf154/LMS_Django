@@ -1,14 +1,26 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from nested_admin.forms import SortableHiddenMixin
-from nested_admin.nested import NestedStackedInline
 from django.urls import reverse
+
+from organizations.models import Teacher
 from .models import UserProfile
 
 
+class TeacherInline(admin.StackedInline):
+    model = Teacher
+    fields = ['name', 'org']
+
+
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('image_display', 'id', 'username', 'display_actions')
+    inlines = [TeacherInline]
+    list_display = ('image_display', 'id', 'username', 'teacher_name', 'display_actions',)
     exclude = ('password', 'last_login', 'date_joined',)
+
+    def teacher_name(self, obj):
+        if obj.teacher:
+            return obj.teacher.name
+
+    teacher_name.short_description = '教师名'
 
     def image_display(self, obj):
         return format_html('<img src="{}" width="50" height="50" alt="Image">', obj.image.url)

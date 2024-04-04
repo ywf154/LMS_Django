@@ -2,10 +2,14 @@
 {% block title %}课程介绍{% endblock %}
 {% block branch %}
 
-    
-    <div>
-        {{ org.desc|safe }}
-    </div>
-    
+
+
+    {% if org.desc %}
+        <div>
+            {{ org.desc|safe }}
+        </div>
+    {% else %}
+        暂无课程介绍
+    {% endif %}
 
 {% endblock %}

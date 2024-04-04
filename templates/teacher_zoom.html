@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block title %}所授课程{% endblock %}
+{% block content %}
+
+
+    <div>
+        <a href="/">
+            <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>返回
+        </a>
+    </div>
+    hallo! {{ name }}
+
+
+    <!-- 弹出框触发按钮 -->
+    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal">
+        新增
+    </button>
+
+    <!-- 弹出框 -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">新增</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="myForm" method="post">
+                        {% csrf_token %}
+                        {{ form }}
+                        <button id="submit" type="submit" class="btn-primary">提交</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#myForm').on('submit', function (event) {
+                event.preventDefault(); // 阻止默认的表单提交行为
+                // 获取表单数据
+                var formData = $(this).serialize();
+                // 发送 AJAX 请求
+                $.ajax({
+                    url: $(this).attr('action'),
+                    method: $(this).attr('method'),
+                    data: formData,
+                    success: function (response) {
+                        // 隐藏模态框
+                        $('#myModal').modal('hide');
+                        // 刷新原来的页面
+                        window.location.reload();
+                    },
+                    error: function (xhr, status, error) {
+                    }
+                });
+            });
+        });
+    </script>
+
+
+    <div class="ListCard">
+        {% for course in courses %}
+            <div>
+                <a href="{% url 'Course_edit' course.id %}">
+                    <img src="{{ MEDIA_URL }}{{ course.image }}" class="card-img-top" alt="课程封面图片">
+                </a>
+                <section>
+                    <a href="{% url 'Course_edit' course.id %}">
+                        <h3>{{ course.name }}</h3>
+                    </a>
+                    <h4>机构：<strong>{{ course.org }}</strong></h4>
+                    <h4>教师：<strong>{{ course.teacher }}</strong></h4>
+                    <h4>课程描述：<strong>{{ course.desc }}</strong></h4>
+
+                </section>
+
+            </div>
+        {% endfor %}
+    </div>
+
+
+{% endblock %}

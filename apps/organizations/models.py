@@ -39,7 +39,7 @@ class CourseOrg(BaseModel):
     #     return courses
 
     class Meta:
-        verbose_name = "课程机构"
+        verbose_name = "机构"
         verbose_name_plural = verbose_name
 
     def __str__(self):
@@ -58,7 +58,7 @@ class Teacher(BaseModel):
     work_position = models.CharField(max_length=50, verbose_name="公司职位")
     points = models.CharField(max_length=50, verbose_name="教学特点")
     age = models.IntegerField(default=18, verbose_name="年龄")
-    image = models.ImageField(upload_to="teacher/%Y/%m", verbose_name="头像", max_length=100)
+    image = models.ImageField(upload_to="teacher/%Y/%m", verbose_name="头像", max_length=100, blank=True, null=True)
 
     class Meta:
         verbose_name = "教师"

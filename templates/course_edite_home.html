@@ -1,0 +1,100 @@
+{% extends "Course_edit.html" %}
+{% block title %}{{ course.name }}课程主页{% endblock %}
+{% block branch %}
+    <h1>课程介绍</h1>
+    {% if course.detail %}
+        <div>
+            {{ course.detail|safe }}
+        </div>
+    {% else %}
+        <p>暂无内容</p>
+    {% endif %}
+    <h1>主讲教师</h1>
+    <div class="ListCard">
+
+        <div>
+            <a>
+                <img src="{{ MEDIA_URL }}{{ course.teacher.user.image }}" class="card-img-top" alt="头像">
+            </a>
+            <section>
+                <h3>{{ course.teacher.name }}</h3>
+                <h4>机构：<strong>{{ course.org }}</strong></h4>
+                <h4>工作年限：<strong>{{ course.teacher.work_years }}</strong></h4>
+                <h4>工作单位：<strong>{{ course.teacher.work_company }}</strong></h4>
+                <h4>职务：<strong>{{ course.teacher.work_position }}</strong></h4>
+                <h4>教学特点：<strong>{{ course.teacher.points }}</strong></h4>
+            </section>
+
+        </div>
+
+    </div>
+    <h1>课程章节</h1>
+
+
+    <div>
+
+
+        <div class="left-card">
+
+            <div>
+                <h3><span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>通知列表</h3>
+            </div>
+            {% if course.notice_set.all %}
+                <ol>
+                    {% for notice in course.notice_set.all reversed %}
+                        <li style="color:#e11515;">{{ notice.title }}</li>
+                        <p style="color:#1556e1;">{{ notice.add_time }} </p>
+                        {{ notice.content|safe }}
+                    {% endfor %}
+                </ol>
+            {% else %}
+                <p>暂无通知</p>
+            {% endif %}
+        </div>
+
+
+        <div class="right-card">
+            <div>
+                <h3><span class="glyphicon glyphicon-comment" aria-hidden="true"></span>课程评论</h3>
+            </div>
+            {% if course.coursecomments_set.all %}
+                {% for courseComment in course.coursecomments_set.all reversed %}
+                    <div>
+                        <h4>{{ courseComment.comments }}</h4>
+                        <h5>--来自：<strong>{{ courseComment.user.username }}</strong></h5>
+                        <h5>--<strong>{{ courseComment.add_time }}</strong></h5>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>暂无评论</p>
+            {% endif %}
+        </div>
+
+
+        <div class="chapter-div">
+            {% for lesson in course.lesson_set.all %}
+                <div class="chapter-list">
+                    <div class="lessonTitle">
+                        <h3><span class="glyphicon glyphicon-tasks" aria-hidden="true"
+                                  style="vertical-align: middle; margin-right: 1px;"></span>{{ lesson.name }}</h3>
+                    </div>
+
+                    <div class="contentTitle">
+                        {% for content in lesson.content_set.all %}
+
+                            <div>
+
+                                <h4><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                    {{ content.name }}
+                                </h4>
+
+                            </div>
+
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

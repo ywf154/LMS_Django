@@ -26,23 +26,23 @@ class LessonInline(NestedStackedInline, SortableHiddenMixin):
     extra = 0
 
 
-class NoticeResourceInline(NestedStackedInline, SortableHiddenMixin):
+class NoticeInline(NestedStackedInline, SortableHiddenMixin):
     model = Notice
     fields = ['title', 'content']
     extra = 0
 
 
 class CourseAdmin(NestedModelAdmin):
-    inlines = [NoticeResourceInline, CourseResourceInline, LessonInline]
+    inlines = [NoticeInline, CourseResourceInline, LessonInline]
     extra = 0
     # 这里是多级内联编辑
     collapse_template = 'templates/admin/collapse_nested_inline.html'
-    fields = ['name', 'org', 'teacher', 'category', 'image', 'detail', 'tag', 'desc']
+    fields = ['name', 'category', 'image', 'detail', 'tag', 'desc']
     list_display = ('image_display', 'name', 'teacher', 'org', 'display_actions')
     search_fields = ['name', 'org', 'teacher', 'category']
 
     def image_display(self, obj):
-        return format_html('<img src="{}" width="50" height="50" alt="Image">', obj.image.url)
+        return format_html('<img src="{}" width="150" height="100" alt="Image">', obj.image.url)
 
     image_display.short_description = '课程封面'
 

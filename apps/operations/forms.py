@@ -21,3 +21,9 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ["detail"]
+
+
+class TaskGradeForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ["grade"]

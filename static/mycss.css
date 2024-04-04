@@ -134,6 +134,17 @@
     overflow: hidden;
 }
 
+#addNotice {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 10px;
+    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(5px);
+    overflow: hidden;
+}
 
 .ListCard div:hover {
     transform: translate(0, -5px);
@@ -382,3 +393,4 @@
     50% { opacity: 1; }
     100% { opacity: 0; }
 }
+

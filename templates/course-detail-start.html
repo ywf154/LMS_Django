@@ -7,13 +7,15 @@
 
         <div class="left-card">
             <div>
-                <h3><span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>课程须知</h3>
+                <h3><span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>通知列表</h3>
             </div>
-            {% for notice in notices %}
-                <div>
-                    {{ notice.title }}
-                </div>
-            {% endfor %}
+            <ol>
+                {% for notice in notices reversed %}
+                    <li style="color:#e11515;">{{ notice.title }}</li>
+                    <p style="color:#1556e1;">{{ notice.add_time }} </p>
+                    {{ notice.content|safe }}
+                {% endfor %}
+            </ol>
         </div>
 
 
@@ -22,13 +24,18 @@
             <div>
                 <h3><span class="glyphicon glyphicon-comment" aria-hidden="true"></span>课程评论</h3>
             </div>
-        <div>
-            <input type="text" value="输入你的评论" >
-        </div>
+            <div>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form }}
+                    <button type="submit">评论</button>
+                </form>
+            </div>
             {% for courseComment in courseComments %}
                 <div>
-                    <p>{{ courseComment.comments }}</p>
-                    <p>--来自：{{ courseComment.user.nick_name }}</p>
+                    <h4>{{ courseComment.comments }}</h4>
+                    <h5>--来自：<strong>{{ courseComment.user.username }}</strong></h5>
+                    <h5>--<strong>{{ courseComment.add_time }}</strong></h5>
                 </div>
             {% endfor %}
         </div>

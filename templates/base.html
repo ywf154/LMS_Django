@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="zh-hans">
 <head>
@@ -43,30 +44,36 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="{% url 'userCourses' %}">我的课程</a></li>
-                            <li><a href="{% url 'userFav' %}">我的收藏</a></li>
-                            <li><a href="#">我的??</a></li>
+                            {% if teacher %}
+                                <li><a href="{% url 'teacherZoom' %}">所授课程</a></li>
+                            {% endif %}
                             <li role="separator" class="divider"></li>
-                            <li><a href="#">？？？</a></li>
-                            <li role="separator" class="divider">？？</li>
-                            <li><a href="{% url 'logout' %}">??</a></li>
+                            <li><a href="{% url 'userCourses' %}">我的课程</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{% url 'userFav' %}">我的收藏</a></li>
                         </ul>
                     </li>
                     <li>
                         <a href="{% url 'Message' %}">
-        <span class="notice-count" style="color: red; display: inline-block; animation: blink 1s infinite;">
-            <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>
-        </span>
-                            {{ notice_count }}消息
+                            {% if notice_count %}
+                                <span class="notice-count"
+                                      style="color: red; display: inline-block; animation: blink 1s infinite;">
+                                    <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>{{ notice_count }}消息
+                                </span>
+                            {% else %}
+                                <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>消息
+                            {% endif %}
+
                         </a>
                     </li>
+
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false"><span class="glyphicon glyphicon-user"
-                                                       aria-hidden="true"></span>{{ user.nick_name }}
+                                                       aria-hidden="true"></span>{{ user.username }}
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="{% url 'UserCenter' %}">个人中心</a></li>
@@ -100,10 +107,6 @@
         </div>
     </div>
 </nav>
-
-
-
-
 
 
 {% block content %}
