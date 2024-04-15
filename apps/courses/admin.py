@@ -37,10 +37,16 @@ class CourseAdmin(NestedModelAdmin):
     extra = 0
     # 这里是多级内联编辑
     collapse_template = 'templates/admin/collapse_nested_inline.html'
-    fields = ['name', 'category', 'image', 'detail', 'tag', 'desc']
-    list_display = ('image_display', 'name', 'teacher', 'org', 'display_actions')
-    search_fields = ['name', 'org', 'teacher', 'category']
+    fields = ['name', 'category', 'image', 'detail', 'tag', 'desc', 'status', ]
+    list_display = ('image_display', 'name', 'teacher', 'org', 'status', 'display_actions')
+    # list_editable = ['status']
+    list_per_page = 5
+    list_filter = ['category', 'org', 'status']
+    search_fields = ['name', ]
+    save_on_top = True
+    save_as = False
 
+    # list_editable = ( 'name', 'teacher', 'org', 'status')
     def image_display(self, obj):
         return format_html('<img src="{}" width="150" height="100" alt="Image">', obj.image.url)
 
@@ -49,12 +55,25 @@ class CourseAdmin(NestedModelAdmin):
     def display_actions(self, obj):
         edit_url = reverse('admin:courses_course_change', args=[obj.pk])
         delete_url = reverse('admin:courses_course_delete', args=[obj.pk])
+        detail_url = reverse('Course_edit', args=[obj.pk])
         edit_button = format_html('<a href="{}" class="admin-edit-button">编辑</a>', edit_url)
         delete_button = format_html('<a href="{}" class="admin-delete-button">删除</a>', delete_url)
-
-        return format_html('{}  {}', edit_button, delete_button)
+        detail_button = format_html('<a href="{}" class="admin-edit-button">详情</a>', detail_url)
+        return format_html('{}  {}  {}', edit_button, detail_button, delete_button)
 
     display_actions.short_description = '操作'
+
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.teacher = request.user.teacher
+            obj.org = request.user.teacher.org
+        super().save_model(request, obj, form, change)
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(teacher=request.user.teacher)
 
 
 admin.site.register(Course, CourseAdmin)

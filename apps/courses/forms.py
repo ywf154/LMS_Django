@@ -38,7 +38,7 @@ class ContentForm(forms.ModelForm):
 class ContentSpqaceForm(forms.ModelForm):
     class Meta:
         model = Content
-        fields = ['learning_space']
+        fields = ['name', 'learning_space']
 
 
 class CourseCommentsForms(forms.ModelForm):

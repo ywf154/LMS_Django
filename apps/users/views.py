@@ -22,7 +22,7 @@ class UserEditView(View):
     def post(self, request, *args, **kwargs):
         form = UserEditForm(request.POST, instance=request.user)
         if request.user.teacher:
-            formTeacher = TeacherEditForm(request.POST, instance=request.user.teacher)
+            formTeacher = TeacherEditForm(request.POST, instance=request.user.teacher, files=request.FILES)
             if form.is_valid() and formTeacher.is_valid():
                 form.save()
                 formTeacher.save()
@@ -81,7 +81,6 @@ class RegisterView(View):
 
 class UserCenterView(View):
     def get(self, request, *args, **kwargs):
-        headImg = request.user.image
         return render(request, 'usercenter.html', locals())
 
 
@@ -143,7 +142,8 @@ class TeacherZoom(View):
         if not teacher:
             return redirect('index')
         name = teacher.name
-        courses = Course.objects.filter(teacher_id=teacher.id).order_by('-add_time').all()
+        # courses = Course.objects.filter(teacher_id=teacher.id).order_by('-add_time', 'status').all()
+        courses = Course.objects.filter(teacher_id=teacher.id).order_by('-status', '-add_time').all()
         form = CourseModelForm()
         return render(request, "teacher_zoom.html", locals())
 

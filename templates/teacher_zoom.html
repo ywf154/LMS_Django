@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 {% block title %}所授课程{% endblock %}
 {% block content %}
+    <div id="msg">
+        {% for mss in messages %}
+            <div class="alert alert-success" role="alert">{{ mss.message }}</div>
+        {% endfor %}
+    </div>
 
 
     <div>
@@ -73,8 +78,17 @@
                         <h3>{{ course.name }}</h3>
                     </a>
                     <h4>机构：<strong>{{ course.org }}</strong></h4>
-                    <h4>教师：<strong>{{ course.teacher }}</strong></h4>
                     <h4>课程描述：<strong>{{ course.desc }}</strong></h4>
+                    <h4>课程描述：<strong>{{ course.category }}</strong></h4>
+                    {% if course.status %}
+                        <h4>课程状态：<strong style="color: #05ef0a">开启</strong></h4>
+                        <a href="{% url 'undisplay_course' course.id %}"><span class="glyphicon glyphicon-eye-close"
+                                                                               aria-hidden="true"></span>关闭课程</a>
+                    {% else %}
+                        <h4>课程状态：<strong style="color: #c12e2a">关闭</strong></h4>
+                        <a href="{% url 'display_course' course.id %}"><span class="glyphicon glyphicon-eye-open"
+                                                                             aria-hidden="true"></span>开启课程</a>
+                    {% endif %}
 
                 </section>
 

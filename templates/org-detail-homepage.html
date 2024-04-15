@@ -14,7 +14,7 @@
 <div><h2>机构课程</h2></div>
 
         <div class="ListCard">
-            {% for course in org.course_set.all %}
+            {% for course in org_course_set_all %}
                 <div>
                     <a href="{% url 'CourseDetail' course.id %}">
                         <img src="{{ MEDIA_URL }}{{ course.image }}" class="card-img-top" alt="课程封面图片">
@@ -37,7 +37,7 @@
         {% for teacher in org.teacher_set.all %}
             <div>
                 <a href="">
-                    <img src="{{ MEDIA_URL }}{{ teacher.user.image }}" class="card-img-top" alt="头像">
+                    <img src="{{ MEDIA_URL }}{{ teacher.image }}" class="card-img-top" alt="头像">
                 </a>
                 <section>
                     <h3 class="card-title">{{ teacher.name }}</h3>

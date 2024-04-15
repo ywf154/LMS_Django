@@ -86,7 +86,7 @@ class Content(BaseModel):
     name = models.CharField(max_length=100, verbose_name=u"小节名称", null=True)
     learn_times = models.IntegerField(default=0, verbose_name=u"学习时长(分钟数)")
     learning_space = UEditorField(verbose_name="学习空间", default='', blank=True, imagePath='course_content/',
-                                  toolbars="full", filePath="course_content_files/", )
+                                  toolbars="full", filePath="course_content_files/", height=300, width=1340)
     file = models.FileField(upload_to="course/resourse/%Y/%m", verbose_name="课件资料", max_length=200, null=True,
                             blank=True)
 

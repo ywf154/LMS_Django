@@ -51,8 +51,11 @@ class CourseInline(admin.StackedInline):
 
 class TeacherAdmin(admin.ModelAdmin):
     inlines = [CourseInline]
-    list_display = ('name', 'org')
+    list_display = ('name', 'org',)
     fields = ['name', 'org', 'user']
+    search_fields = ['name', 'user']
+    # raw_id_fields = ['user']
+    autocomplete_fields = ['user']  # 这个需要在user的admin中添加搜索功能
 
 
 admin.site.register(CourseOrg, CourseOrgAdmin)

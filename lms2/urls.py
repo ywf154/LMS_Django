@@ -41,30 +41,33 @@ urlpatterns = [
            name='CourseDetail_start'),
       path('Course_learn/<int:cid>/<int:lid>/<int:tid>/', Course_learn.as_view(), name='Course_learn'),
 
-                    # 教师课程
-                    path('teacherZoom/', TeacherZoom.as_view(), name='teacherZoom'),
-                    path('teacherZoom/Course_edit/<int:course_id>/', Course_edit.as_view(), name='Course_edit'),
-                    path('teacherZoom/Course_edit/<int:course_id>/desc/', Course_edit_desc.as_view(),
-                         name='Course_edit_desc'),
-                    path('teacherZoom/Course_edit/<int:course_id>/home/', Course_edite_home.as_view(),
-                         name='Course_edite_home'),
-                    path('teacherZoom/Course_edit/<int:course_id>/add_notice/', Add_notice.as_view(),
-                         name='add_notice'),
-                    path('teacherZoom/Course_edit/<int:course_id>/add_lesson/', Add_lesson.as_view(),
-                         name='add_lesson'),
-                    path('teacherZoom/Lesson_edit/<int:lid>/', Lesson_edit.as_view(), name='Lesson_edit'),
-                    path('teacherZoom/Content_edit/<int:tid>/', Content_edit.as_view(), name='Content_edit'),
-                    path('teacherZoom/Content_delete/<int:tid>/', Content_delete.as_view(), name='Content_delete'),
-                    path('delete_lesson/<int:lid>/', Delete_lesson.as_view(), name='delete_lesson'),
+                  # 教师课程
+                  path('teacherZoom/', TeacherZoom.as_view(), name='teacherZoom'),
+                  path('teacherZoom/Course_edit/<int:course_id>/', Course_edit.as_view(), name='Course_edit'),
+                  path('teacherZoom/Course_edit/<int:course_id>/desc/', Course_edit_desc.as_view(),
+                       name='Course_edit_desc'),
+                  path('teacherZoom/Course_edit/<int:course_id>/home/', Course_edite_home.as_view(),
+                       name='Course_edite_home'),
+                  path('teacherZoom/Course_edit/<int:course_id>/add_notice/', Add_notice.as_view(),
+                       name='add_notice'),
+                  path('teacherZoom/Course_edit/<int:course_id>/add_lesson/', Add_lesson.as_view(),
+                       name='add_lesson'),
+                  path('teacherZoom/Lesson_edit/<int:lid>/', Lesson_edit.as_view(), name='Lesson_edit'),
+                  path('teacherZoom/Content_edit/<int:tid>/', Content_edit.as_view(), name='Content_edit'),
+                  path('teacherZoom/Content_delete/<int:tid>/', Content_delete.as_view(), name='Content_delete'),
+                  path('delete_lesson/<int:lid>/', Delete_lesson.as_view(), name='delete_lesson'),
+                  path('undisplay_course/<int:cid>/', unDisplay_course.as_view(), name='undisplay_course'),
+                  path('display_course/<int:cid>/', display_course.as_view(), name='display_course'),
+
 
 
       # 操作
-      re_path(r'user_fav/$', User_fav.as_view(), name='user_fav'),
-      path('readMessage/<int:nid>/',ReadMessage.as_view(), name='readMessage'),
-      path('task/<int:cid>/<int:lid>/<int:tid>/', task.as_view(), name='task'),
-      path('EditTask/<int:task_id>/', EditTask.as_view(), name='EditTask'),
-                    path('uploadfile/<int:tid>/', Uploadfile.as_view(), name='uploadfile'),
-                    path('showTask/<int:task_id>/', ShowTask.as_view(), name='showTask'),
+                  re_path(r'user_fav/$', User_fav.as_view(), name='user_fav'),
+                  path('readMessage/<int:nid>/', ReadMessage.as_view(), name='readMessage'),
+                  path('task/<int:cid>/<int:lid>/<int:tid>/', task.as_view(), name='task'),
+                  path('EditTask/<int:task_id>/', EditTask.as_view(), name='EditTask'),
+                  path('uploadfile/<int:tid>/', Uploadfile.as_view(), name='uploadfile'),
+                  path('showTask/<int:task_id>/', ShowTask.as_view(), name='showTask'),
 
 
 

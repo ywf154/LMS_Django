@@ -24,19 +24,6 @@ class Banner(BaseModel):
         return self.title
 
 
-class UserAsk(BaseModel):
-    name = models.CharField(max_length=20, verbose_name="姓名")
-    mobile = models.CharField(max_length=11, verbose_name="手机")
-    course_name = models.CharField(max_length=50, verbose_name="课程名")
-
-    class Meta:
-        verbose_name = "用户咨询"
-        verbose_name_plural = verbose_name
-
-    def __str__(self):
-        return "{name}_{course}({mobile})".format(name=self.name, course=self.course_name, mobile=self.mobile)
-
-
 class CourseComments(BaseModel):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name="用户")
     course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name="课程")
@@ -53,7 +40,8 @@ class CourseComments(BaseModel):
 class UserFavorite(BaseModel):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name="用户")
     fav_id = models.IntegerField(verbose_name="数据id")
-    fav_type = models.IntegerField(choices=((2, "课程"), (1, "课程机构"), (3, "讲师")), default=1,verbose_name="收藏类型")
+    fav_type = models.IntegerField(choices=((2, "课程"), (1, "课程机构"), (3, "讲师")), default=1,
+                                   verbose_name="收藏类型")
 
     class Meta:
         verbose_name = "用户收藏"
@@ -65,7 +53,7 @@ class UserFavorite(BaseModel):
 
 class UserMessage(BaseModel):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name="用户")
-    notice = models.ForeignKey(Notice, on_delete=models.CASCADE, verbose_name="来自的通知",default=None)
+    notice = models.ForeignKey(Notice, on_delete=models.CASCADE, verbose_name="来自的通知", default=None)
     has_read = models.BooleanField(default=False, verbose_name="是否已读")
 
     class Meta:
@@ -73,7 +61,7 @@ class UserMessage(BaseModel):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self.message
+        return self.notice.title
 
 
 class UserCourse(BaseModel):

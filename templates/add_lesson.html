@@ -39,8 +39,24 @@
                             <h3><span class="glyphicon glyphicon-tasks" aria-hidden="true"
                                       style="vertical-align: middle; margin-right: 1px;"></span>{{ lesson.name }}</h3>
                         </a>
-                        <a href="{% url 'delete_lesson' lesson.id %}">
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>删除</a>
+
+                        <a onclick="confirmDelete('{{ lesson.id }}')">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>删除
+                        </a>
+
+                        <script>
+                            function confirmDelete(lessonId) {
+                                var confirmation = confirm('确定要删除吗？');
+                                if (confirmation) {
+                                    // 用户点击了确定按钮，执行删除操作
+                                    window.location.href = "/delete_lesson/" + lessonId + "/?confirm=true";
+                                } else {
+                                    // 用户点击了取消按钮，取消删除操作
+                                    // 可以选择执行其他操作或不执行任何操作
+                                }
+                            }
+                        </script>
+
                     </div>
 
                     <div>
@@ -73,4 +89,3 @@
     </div>
 
 {% endblock %}
-

@@ -14,25 +14,23 @@
             </li>
         </ul>
     </div>
+    <div>
+        <a href="{% url 'CourseDetail_start' course.id %}">
+            <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>返回
+        </a>
+    </div>
 
     <div style="display: flex">
-        <div class="learnCard">
-            <div class="learnTitle">
-                <a href="{% url 'CourseDetail_start' course.id %}">
-                    <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>返回
-                </a>
-                <h3>
-                    {{ content.name }}
-                </h3>
-            </div>
-            <div class="learning">
-                {{ content.learning_space|safe }}
-            </div>
+        <!-- <div class="learnCard"> -->
+
+        <div style="width: 250vh;margin-left: 50px;">
+            {{ content.learning_space|safe }}
         </div>
+
 
         <div class="right-card">
             <div class="fileDown">
-                <h3>课程及作业</h3>
+                <h3>课件及作业</h3>
             </div>
             {% if content.file %}
                 <div class="fileDown">

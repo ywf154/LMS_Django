@@ -58,7 +58,7 @@ class Teacher(BaseModel):
     work_position = models.CharField(max_length=50, verbose_name="公司职位")
     points = models.CharField(max_length=50, verbose_name="教学特点")
     age = models.IntegerField(default=18, verbose_name="年龄")
-    image = models.ImageField(upload_to="teacher/%Y/%m", verbose_name="头像", max_length=100, blank=True, null=True)
+    image = models.ImageField(upload_to="teacher/%Y/%m", verbose_name="头像", default="teacher_img_default.jpg")
 
     class Meta:
         verbose_name = "教师"

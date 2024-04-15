@@ -68,6 +68,7 @@ class OrgDetail_home(View):
     def get(self, request, org_id, *args, **kwargs):
         if org_id:
             org, fav, fav_count, course_count = get_org_data(org_id, request.user)
+            org_course_set_all = org.course_set.filter(status=1)
         return render(request, "org-detail-homepage.html", locals())
 
 
@@ -89,6 +90,7 @@ class OrgDetail_courseView(View):
     def get(self, request, org_id, *args, **kwargs):
         if org_id:
             org, fav, fav_count, course_count = get_org_data(org_id, request.user)
+            org_course_set_all = org.course_set.filter(status=1)
         return render(request, "org-detail-course.html", locals())
 
 

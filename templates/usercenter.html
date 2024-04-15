@@ -5,8 +5,36 @@
         <a href="/">
             <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>返回</a>
     </div>
-    <div>
-        <img src="./../media/{{ headImg }}"/>
+    <div class="ListCard">
+
+        <div>
+            <a>
+                <img src="{{ MEDIA_URL }}{{ user.image }}" class="card-img-top" alt="头像">
+            </a>
+            <section>
+                <h3>{{ user.username }}</h3>
+                <h4>性别：<strong>{{ user.gender }}</strong></h4>
+                <h4>手机号：<strong>{{ user.mobile }}</strong></h4>
+                <h4>邮箱：<strong>{{ user.email }}</strong></h4>
+
+            </section>
+
+        </div>
+
+        <div>
+            <a>
+                <img src="{{ MEDIA_URL }}{{ user.teacher.image }}" class="card-img-top" alt="头像">
+            </a>
+            <section>
+                <h3>{{ user.teacher.name }}</h3>
+                <h4>机构：<strong>{{ user.teacher.org }}</strong></h4>
+                <h4>工作年限：<strong>{{ user.teacher.work_years }}</strong></h4>
+                <h4>工作单位：<strong>{{ user.teacher.work_company }}</strong></h4>
+                <h4>职务：<strong>{{ user.teacher.work_position }}</strong></h4>
+                <h4>教学特点：<strong>{{ user.teacher.points }}</strong></h4>
+            </section>
+
+        </div>
+
     </div>
-    <div>{{ user.username }}</div>
 {% endblock %}

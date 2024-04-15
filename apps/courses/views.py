@@ -1,17 +1,16 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+from django.contrib import messages
 from courses.forms import *
 from courses.models import *
 from operations.models import *
-from organizations.models import Teacher
 
 
 def get_course_data(course_id, user):
     if user.is_authenticated:
-        course = Course.objects.filter(id=int(course_id))[0]
+        course = Course.objects.filter(id=int(course_id), status=1)[0]
         fav = UserFavorite.objects.filter(fav_id=int(course_id), fav_type=2, user=user)
         fav_count = UserFavorite.objects.filter(fav_type=2, fav_id=course_id).count()
         content_count = Content.objects.filter(lesson__course=course).count()
@@ -21,7 +20,7 @@ def get_course_data(course_id, user):
 
 class CourseView(View):
     def get(self, request, *args, **kwargs):
-        all_courses = Course.objects.all().order_by('-add_time')
+        all_courses = Course.objects.filter(status=1).order_by('-add_time')
         categs = set([course.category for course in all_courses])
         categs = [categ for categ in categs]
         categ = request.GET.get('categ', '')
@@ -137,6 +136,7 @@ class Course_edit_desc(View):
             course, fav, fav_count, content_count, student_count = get_course_data(course_id, request.user)
             lesson_list = course.lesson_set.all()
         form = CourseBaseForm(instance=course)
+        undisplayed = request.GET.get('undisplayed', '')
         return render(request, "Course_edit_desc.html", locals())
 
     def post(self, request, course_id, *args, **kwargs):
@@ -232,6 +232,7 @@ class Content_edit(View):
         content = Content.objects.filter(id=tid).first()
         courseResources = CourseResource.objects.filter(content_id=tid).all()
         form = ContentSpqaceForm(instance=content)
+        messages.get_messages(request)  # 触发消息存储的处理
         return render(request, "Content_edit.html", locals())
 
     def post(self, request, tid, *args, **kwargs):
@@ -239,8 +240,11 @@ class Content_edit(View):
         form = ContentSpqaceForm(request.POST, files=request.FILES, instance=content)
         if form.is_valid():
             content.learning_space = form.cleaned_data['learning_space']
+            content.name = form.cleaned_data['name']
             content.save()
-            return redirect('Lesson_edit', lid=content.lesson.id)
+            messages.success(request, '保存成功！')
+            return redirect('Content_edit', tid=content.id)
+
         return render(request, "Content_edit.html", locals())
 
 
@@ -255,8 +259,27 @@ class Content_delete(View):
 
 class Delete_lesson(View):
     def get(self, request, lid, *args, **kwargs):
+        confirm_delete = request.GET.get('confirm', False)
         lesson = Lesson.objects.filter(id=lid).first()
-        if lesson:
+        if lesson and confirm_delete == 'true':
             course_id = lesson.course.id  # 保存要删除内容所属的课程ID
             lesson.delete()
             return redirect('add_lesson', course_id=course_id)
+        return HttpResponse("删除操作被取消")  # 返回一个适当的响应对象
+
+
+class unDisplay_course(View):
+    def get(self, request, cid, *args, **kwargs):
+        course = Course.objects.get(id=cid)
+        course.status = False
+        course.save()
+        return redirect('teacherZoom')
+
+
+class display_course(View):
+    def get(self, request, cid, *args, **kwargs):
+        course = Course.objects.get(id=cid)
+        course.status = True
+        course.save()
+        messages.add_message(request, messages.SUCCESS, '已开启课程')
+        return redirect('teacherZoom')

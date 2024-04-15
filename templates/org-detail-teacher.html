@@ -5,23 +5,23 @@
     <div>
 
         <div class="ListCard">
-        {% for teacher in org.teacher_set.all %}
-            <div>
-                <a href="">
-                    <img src="{{ MEDIA_URL }}{{ teacher.user.image }}" class="card-img-top" alt="头像">
-                </a>
-                <section>
-                    <h3 class="card-title">{{ teacher.name }}</h3>
-                    <h4>机构：<strong>{{ teacher.org }}</strong></h4>
-                    <h4>工作年限：<strong>{{ teacher.work_years }}</strong></h4>
-                    <h4>工作单位：<strong>{{ teacher.work_company }}</strong></h4>
-                    <h4>职务：<strong>{{ teacher.work_position }}</strong></h4>
-                    <h4>教学特点：<strong>{{ teacher.points }}</strong></h4>
-                </section>
+            {% for teacher in org.teacher_set.all %}
+                <div>
+                    <a href="">
+                        <img src="{{ MEDIA_URL }}{{ teacher.image }}" class="card-img-top" alt="头像">
+                    </a>
+                    <section>
+                        <h3 class="card-title">{{ teacher.name }}</h3>
+                        <h4>机构：<strong>{{ teacher.org }}</strong></h4>
+                        <h4>工作年限：<strong>{{ teacher.work_years }}</strong></h4>
+                        <h4>工作单位：<strong>{{ teacher.work_company }}</strong></h4>
+                        <h4>职务：<strong>{{ teacher.work_position }}</strong></h4>
+                        <h4>教学特点：<strong>{{ teacher.points }}</strong></h4>
+                    </section>
 
-            </div>
-        {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+
     </div>
-
-
 {% endblock %}

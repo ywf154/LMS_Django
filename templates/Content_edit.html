@@ -1,22 +1,34 @@
 {% extends 'base.html' %}
+{% block title %}章节内容编辑{% endblock %}
 {% block content %}
-    <div>
-        <a href="{% url 'Lesson_edit' content.lesson.id %}">
-            <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>返回
-        </a>
-    </div>
 
-    <div style="overflow: auto; ">
-        <div style="float: left;">
+    {% if messages %}
+        {% for message in messages %}
+            <script>alert("{{ message }}");</script>
+        {% endfor %}
+    {% endif %}
+    <!-- <div style="overflow: auto; "> -->
+    <div>
+        <div style="margin-left: 10px;margin-left: 10px;">
             <form method="post" enctype="multipart/form-data">
+                <div>
+                    <a href="{% url 'Lesson_edit' content.lesson.id %}">
+                        <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>返回
+                    </a>
+                    <button type="submit" class="btn btn-primary btn-sm">保存</button>
+                </div>
+                <div>
                 {{ form.media }}
                 {% csrf_token %}
-                {{ form }}
+                    章节名称：{{ form.name }}
+                    {{ form.learning_space }}
                 {{ errs }}
-                <button type="submit">提交</button>
+                </div>
+
+
             </form>
         </div>
-        <div style="float: right;width: 200px;">
+        <div>
             <li>
                 <a href="{% url 'uploadfile' content.id %}"><span class="glyphicon glyphicon-pushpin"
                                                                   aria-hidden="true"></span>上传课件</a>
