@@ -1,15 +1,6 @@
 {% extends "org_detail_base.html" %}
 {% block title %}课程介绍{% endblock %}
 {% block branch %}
-
-
-
-    {% if org.desc %}
-        <div>
-            {{ org.desc|safe }}
-        </div>
-    {% else %}
-        暂无课程介绍
-    {% endif %}
+    {% include 'compose/common/introduction.html' with data=org %}
 
 {% endblock %}

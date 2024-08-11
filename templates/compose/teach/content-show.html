@@ -1,0 +1,22 @@
+{% if data == 1 %}
+
+    <button class="btn btn-warning btn-lg" id="showContent">Show</button>
+
+{% else %}
+    <div id="ContentShow" style="display: block;margin-left: 100px;margin-top: 20px">
+        {{ content.learning_space|safe }}
+    </div>
+    <script>
+        document.getElementById('showContent').addEventListener('click', function () {
+
+            {% if data1 != 1 %}
+                document.getElementById('showTaskList').style.display = 'none';
+                document.getElementById('formContent').style.display = 'none';
+            {% endif %}
+            document.getElementById('ContentShow').style.display = 'block';
+            document.getElementById('TSK').style.display = 'none';
+        });
+    </script>
+
+
+{% endif %}

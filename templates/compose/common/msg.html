@@ -1,0 +1,26 @@
+{#{% if messages %}#}
+{#    {% for message in messages %}#}
+{#        <script>alert("{{ message }}");</script>#}
+{#    {% endfor %}#}
+{#{% endif %}#}
+
+
+{% if messages %}
+  <div class="container-fluid">
+    {% for message in messages %}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert" style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%);">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var alertList = document.querySelectorAll('.alert');
+      alertList.forEach(function (alert) {
+        new bootstrap.Alert(alert)
+      });
+    });
+  </script>
+{% endif %}

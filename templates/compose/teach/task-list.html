@@ -1,0 +1,61 @@
+{% if data == 1 %}
+    <button class="btn btn-danger btn-lg" id="showTaskListBT">Students' Task</button>
+{% else %}
+
+    <div id="showTaskList" style="display: none;margin-left: 100px;margin-top: 20px;margin-right: 100px">
+
+        <h2>Task List of "{{ content.name }}"</h2>
+
+        <table class="table-hover">
+            <tr>
+                <td style="width: 100px">Index</td>
+                <td style="width: 200px">Student Name</td>
+                <td style="width: 150px">Grade</td>
+                <td style="width: 150px">Operate</td>
+            </tr>
+            {% for task in content.task_set.all %}
+                <tr>
+                    <th><h4>{{ forloop.counter }}</h4></th>
+                    <th>{{ task.user.username }}</th>
+                    <th>
+                        {% if task.grade == 0 %}
+                            Empty
+                        {% else %}
+                            {{ task.grade }}
+                        {% endif %}
+                    </th>
+                    <th>
+{#                        <a type="button" class="btn btn-primary" href="{% url 'showTask' task.id %}">Detail</a>#}
+                        {% include 'compose/user/task-detail.html' %}
+                        {% include 'compose/teach/task-grade-form.html' %}
+                    </th>
+                </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+    <script>
+        document.getElementById('showTaskListBT').addEventListener('click', function () {
+            document.getElementById('formContent').style.display = 'none';
+            document.getElementById('ContentShow').style.display = 'none';
+            document.getElementById('showTaskList').style.display = 'block';
+        });
+    </script>
+
+
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        td {
+            font-size: 20px;
+        }
+    </style>
+{% endif %}

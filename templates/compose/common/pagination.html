@@ -1,0 +1,24 @@
+<div class="pagination-container">
+    <nav aria-label="Page navigation">
+        <ul class="pagination pagination-lg">
+            {% if obj.has_previous %}
+                <li>
+                    <a href="?page={{ obj.previous_page_number }}&categ={{ categ }}&search={{ search }}&sort={{ sort }}">上一页</a>
+                </li>
+            {% endif %}
+
+            {% for thispage in obj.paginator.page_range %}
+                <li>
+                    <a href="?page={{ thispage }}&categ={{ categ }}&search={{ search }}&sort={{ sort }}">{{ thispage }}</a>
+                </li>
+            {% endfor %}
+
+            {% if obj.has_next %}
+                <li>
+                    <a href="?page={{ obj.next_page_number }}&categ={{ categ }}&search={{ search }}&sort={{ sort }}">下一页</a>
+                </li>
+            {% endif %}
+
+        </ul>
+    </nav>
+</div>

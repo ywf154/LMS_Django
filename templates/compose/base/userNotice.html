@@ -1,0 +1,12 @@
+{% if user.teacher and request.path|slice:":8" != "/teacher" %}
+<a href="{% url 'Message' %}">
+    {% if notice_count %}
+        <span class="notice-count" style="color: red; display: inline-block; animation: blink 1s infinite;">
+          <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>
+        {{ notice_count }}&nbsp;&nbsp;Massages
+    </span>
+    {% else %}
+        <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>Massages
+    {% endif %}
+</a>
+{% endif %}

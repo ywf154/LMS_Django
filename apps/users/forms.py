@@ -1,6 +1,6 @@
 from django import forms
 
-from organizations.models import Teacher, CourseOrg
+from organizations.models import Teacher, Org
 from users.models import UserProfile
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
@@ -42,4 +42,4 @@ class ChangePwdForm(forms.Form):
 class TeacherEditForm(forms.ModelForm):
     class Meta:
         model = Teacher
-        fields = ['name', 'work_years', 'work_company', 'work_position', 'points', 'age', 'image', 'org']
+        fields = ['name', 'work_years', 'work_company', 'age', 'image', 'org']

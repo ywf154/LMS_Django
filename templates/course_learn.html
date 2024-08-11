@@ -1,6 +1,6 @@
-{% extends 'base.html' %}
+{% extends 'compose/base/layout.html' %}
 
-{% block title %}{{ course.name }}-学习界面{% endblock %}
+{% block title %}{{ content.lesson.course.name }}-学习界面{% endblock %}
 
 {% block content %}
     <!-- 面包屑-->
@@ -8,46 +8,24 @@
         <ul>
             <li><a href="{% url 'index' %}">首页</a></li>
             <li><a href="{% url 'CourseList' %}">课程列表</a></li>
-            <li><a href="{% url 'CourseDetail_start' course.id %}">课程门户</a></li>
+            <li><a href="{% url 'CourseDetail_start' content.lesson.course_id %}">课程门户</a></li>
             <li>
-                <a href="{% url 'Course_learn' course.id lesson.id content.id %}">{{ content.lesson }}--{{ content.name }}</a>
+                <a href="{% url 'Course_learn' content.id %}">{{ content.lesson }}--{{ content.name }}</a>
             </li>
         </ul>
     </div>
     <div>
-        <a href="{% url 'CourseDetail_start' course.id %}">
-            <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>返回
-        </a>
+        {% include 'compose/common/back-to-url.html' with url='CourseDetail_start' data=content.lesson.course_id lg=1 %}
+        {% include 'compose/teach/content-show.html' with data=1 %}
+
+        {% include 'compose/user/task-form.html' with data=1 %}
+        {% include 'compose/user/task-detail.html'%}
+        {% include 'compose/common/file.html' %}
     </div>
 
-    <div style="display: flex">
-        <!-- <div class="learnCard"> -->
 
-        <div style="width: 250vh;margin-left: 50px;">
-            {{ content.learning_space|safe }}
-        </div>
-
-
-        <div class="right-card">
-            <div class="fileDown">
-                <h3>课件及作业</h3>
-            </div>
-            {% if content.file %}
-                <div class="fileDown">
-                    <a href="{{ content.file.url }}" target="_blank">
-                        <span class="glyphicon glyphicon-save" aria-hidden="true"></span>课件：{{ content.name }}
-                    </a>
-                </div>
-            {% endif %}
-
-            <div class="fileDown">
-                <a href="{% url 'task' course.id lesson.id content.id %}">
-                    <span class="glyphicon glyphicon-open" aria-hidden="true"></span>提交作业
-                </a>
-            </div>
-        </div>
-    </div>
-
+    {% include 'compose/teach/content-show.html' with data1=1 %}
+        {% include 'compose/user/task-form.html' %}
 
 
 

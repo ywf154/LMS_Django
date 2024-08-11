@@ -1,0 +1,26 @@
+
+<button class="btn btn-warning" type="button" data-toggle="modal" data-target="#teachFormModal">
+    Update Your Information
+</button>
+
+<!-- 弹出框 -->
+<div class="modal fade" id="teachFormModal" tabindex="-1" role="dialog" aria-labelledby="teachFormModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="teachFormModal">Update Your Information</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'teacherEdit' %}">
+                    {% csrf_token %}
+                    {{ formTeacher }}
+                    <button id="submit" type="submit" class="btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

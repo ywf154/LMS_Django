@@ -1,0 +1,17 @@
+<li>
+    <a
+            {% if data == 1 %}
+                href="{% url 'fav_org' id %}"
+                {% else %}
+                href="{% url 'fav_course' id %}"
+            {% endif %}
+    >
+        {% if fav %}
+            <span class="glyphicon glyphicon-eye-close"></span><span>取消收藏</span>
+
+        {% else %}
+            <span class="glyphicon glyphicon-heart" style="color: #c12e2a"></span>
+            <span style="color: #c12e2a">收藏</span>
+        {% endif %}
+    </a>
+</li>

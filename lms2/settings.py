@@ -2,15 +2,11 @@ import os
 import sys
 from pathlib import Path
 
-
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
 AUTH_USER_MODEL = 'users.UserProfile'
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-63*+@jyan9qhnk_p-l0zcmxpl^9y$&xle+bgl+#z_xgcj24v#o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -43,6 +39,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'users.middleware.LoginRequiredMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -63,6 +60,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',  # ----------后加的
                 'django.template.context_processors.static',  # ----------后加的
+                'operations.context_processors.navbar_data_processor',  # ----------全局数据---后加的
+                'users.context_processors.user_data_processor',  # ----------全局数据---后加的
 
             ],
         },
@@ -71,13 +70,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'lms2.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'lms2',
+        'NAME': 'lms',
         'USER': 'root',
         'PASSWORD': '123456',
         'HOST': '127.0.0.1',
@@ -106,9 +104,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'zh-hans'
+LANGUAGE_CODE = 'en'
 
-TIME_ZONE = 'Asia/Shanghai'
+TIME_ZONE = 'Europe/Minsk'
 
 USE_I18N = True
 

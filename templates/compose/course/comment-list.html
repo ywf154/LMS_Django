@@ -1,0 +1,43 @@
+{#参数：courseComments 列表#}
+<div>
+    <h3><span class="glyphicon glyphicon-comment" aria-hidden="true"></span>课程评论</h3>
+</div>
+
+
+{% if form %}
+    <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#commentModel">
+        Leave your comment
+    </button>
+{% endif %}
+
+<!-- Modal -->
+<div class="modal fade" id="commentModel" tabindex="-1" role="dialog" aria-labelledby="CMModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="CMModalLabel">Leave your comment</h4>
+            </div>
+            <form method="post">
+                <div class="modal-body">
+                    {% csrf_token %}
+                    {{ form }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% for courseComment in courseComments %}
+    <div>
+        <h4>{{ courseComment.comments }}</h4>
+        <h5>--来自：<strong>{{ courseComment.user.username }}</strong></h5>
+        <h5>--<strong>{{ courseComment.add_time }}</strong></h5>
+    </div>
+{% endfor %}

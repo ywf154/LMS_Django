@@ -1,0 +1,31 @@
+{% extends 'compose/base/incloudes.html' %}
+{% block title %}
+{% endblock %}
+
+{% block layout %}
+    <a href="{% url 'index' %}"><img class="img-fluid" src="https://vstu.by/images/logotype/logo_en1.png" alt="Logo"></a>
+
+
+    {% block form %}
+    {% endblock %}
+
+    <style>
+        body {
+            background-image: url("https://lh3.googleusercontent.com/p/AF1QipN1MH058c2ZcT2iKaPazATK1e80zfGx1qeiIhHp=s1360-w1360-h1020");
+            background-size: cover;
+            background-repeat: no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .img-fluid {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            height: 200px;
+            max-height: 200px;
+        }
+
+    </style>
+{% endblock %}

@@ -1,5 +1,4 @@
 from django import forms
-from django.forms import inlineformset_factory
 
 from courses.models import *
 from operations.models import CourseComments
@@ -14,7 +13,13 @@ class CourseModelForm(forms.ModelForm):
 class CourseBaseForm(forms.ModelForm):
     class Meta:
         model = Course
-        fields = ['image', 'name', 'category', 'desc', 'tag', 'youneed_know', 'detail']
+        fields = ['image', 'name', 'category', 'desc']
+
+
+class CourseDetailForm(forms.ModelForm):
+    class Meta:
+        model = Course
+        fields = ['detail']
 
 
 class NoticeForm(forms.ModelForm):
@@ -35,6 +40,12 @@ class ContentForm(forms.ModelForm):
         fields = ['name']
 
 
+class Content_upload_Form(forms.ModelForm):
+    class Meta:
+        model = Content
+        fields = ['file']
+
+
 class ContentSpqaceForm(forms.ModelForm):
     class Meta:
         model = Content
@@ -45,9 +56,3 @@ class CourseCommentsForms(forms.ModelForm):
     class Meta:
         model = CourseComments
         fields = ['comments']
-
-
-class CourseResourceForm(forms.ModelForm):
-    class Meta:
-        model = CourseResource
-        fields = ['name', 'file']

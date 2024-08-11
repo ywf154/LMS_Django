@@ -1,0 +1,52 @@
+<div>
+    <h3>{{ lesson.name }}</h3>
+    <table class="table-hover">
+        <tr class="title-tr">
+            <td style="width: 10px">Index</td>
+            <td style="width: 50px">Content Name</td>
+            <td style="width: 20px">File</td>
+            <td style="width: 30px">Size Of Content</td>
+            <td style="width: 30px">Number Of Tasks</td>
+            <td style="width: 50px">Operate</td>
+        </tr>
+        {% for content in contents %}
+            <tr>
+                <th><h4>{{ forloop.counter }}</h4></th>
+                <th><h3>{{ content.name }}</h3></th>
+                <th><h4>
+                    {% if content.file %}
+                        <a href="{{ content.file.url }}">Download File</a>
+                    {% else %}
+                        <span style="color: #c12e2a">Empty</span>
+                    {% endif %}
+                </h4>
+                </th>
+                <th><h4>{{ content.learning_space|length }}</h4></th>
+                <th><h4>{{ content.task_set.count }}</h4></th>
+                <th>
+                    <a type="button" class="btn btn-primary" href="{% url 'Content_edit' content.id %}">Edite</a>
+{#                    <a type="button" class="btn btn-danger" href="{% url 'Content_delete' content.id %}">Delete</a>#}
+                    {% include 'compose/common/delete.html' with url='Content_delete' id=content.id %}
+                </th>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    td {
+        font-size: 20px;
+    }
+</style>
+
+

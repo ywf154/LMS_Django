@@ -1,0 +1,19 @@
+<!-- 导航-->
+<div class="nav4">
+    <ul>
+        <li><a href="{% url 'CourseDetail_home' course.id %}">
+            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;课程首页
+        </a></li>
+        <li><a href="{% url 'CourseDetail_desc' course.id %}">
+            <span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>&nbsp;课程介绍
+        </a></li>
+        <li><a href="{% url 'CourseDetail_teacher' course.id %}">
+            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;课程教师
+        </a></li>
+        {% include 'compose/common/fav.html' with id=course.id %}
+        <li><a href="{% url 'CourseDetail_start' course.id %}">
+            <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;开始学习
+        </a></li>
+    </ul>
+</div>
+

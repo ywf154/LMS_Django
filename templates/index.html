@@ -1,86 +1,21 @@
-{% extends 'base.html' %}
+{% extends 'compose/base/layout.html' %}
 
 {% block title %}主页{% endblock %}
 
 {% block content %}
-
-<style>
-    .container {
-        display: flex;
-        align-items: center;
-    }
-
-    #slider {
-        position: relative;
-        overflow: hidden;
-    }
-
-    .slide {
-        display: none;
-        transition: opacity 0.5s ease-in-out;
-    }
-
-    .slide.active {
-        display: block;
-    }
-
-    .prevBtn,
-    .nextBtn {
-        background-color: #d3c7c7;
-        font-size: 60px;
-        padding: 8px;
-        border: none;
-        cursor: pointer;
-    }
-</style>
-
-<div class="container">
-    <button class="prevBtn" style="width: 50px; height: 500px;">&lt;</button>
-    <div id="slider">
-        {% for slider in banners %}
-            <div class="slide">
-                <img src="{{ slider.image.url }}" alt="{{ slider.title }}" style="width: 1000px; height: 500px;">
-            </div>
-        {% endfor %}
+    <div class="row" style="display: flex; justify-content: space-between;">
+        <div style="width: 200px;">
+            {% include 'compose/base/show.html' with title='Popular Organizations' link='OrgDetail' data=recommend_orgs %}
+            {% include 'compose/base/show.html' with title='Popular Courses' link='CourseDetail' data=recommend_courses %}
+        </div>
+        <div class="mid-part" style="width: calc(100% - 500px);">
+            {% include 'compose/base/banner.html' %}
+        </div>
+        <div style="width: 200px;">
+                <p>You have studied {{ course_count }} courses</p>
+                {% include 'compose/base/show.html' with title='My Courses' link='CourseDetail' data=my_courses name=1 %}
+                <p>You have {{ fav_course_count }} favorite courses</p>
+                {% include 'compose/base/show.html' with title='Favorite Courses' link='CourseDetail' data=my_fav_courses name=1 %}
+        </div>
     </div>
-    <button class="nextBtn" style="width: 50px; height: 500px;">&gt;</button>
-</div>
-
-<script>
-    var slider = document.getElementById('slider');
-    var slides = slider.getElementsByClassName('slide');
-    var currentIndex = 0;
-
-    var prevBtn = document.querySelector('.prevBtn');
-    var nextBtn = document.querySelector('.nextBtn');
-
-    function showSlide(index) {
-        for (var i = 0; i < slides.length; i++) {
-            slides[i].classList.remove('active');
-        }
-        slides[index].classList.add('active');
-    }
-
-    prevBtn.addEventListener('click', function () {
-        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-        showSlide(currentIndex);
-    });
-
-    nextBtn.addEventListener('click', function () {
-        currentIndex = (currentIndex + 1) % slides.length;
-        showSlide(currentIndex);
-    });
-
-    function autoSlide() {
-        currentIndex = (currentIndex + 1) % slides.length;
-        showSlide(currentIndex);
-    }
-
-    var timer = setInterval(autoSlide, 3000);
-
-    window.addEventListener('load', function () {
-        showSlide(currentIndex);
-    });
-</script>
-
 {% endblock %}

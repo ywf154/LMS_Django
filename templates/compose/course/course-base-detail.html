@@ -1,0 +1,25 @@
+    <!-- 信息-->
+    <div class="Detail">
+        <div class="Img">
+            <img src="{{ MEDIA_URL }}{{ course.image }}">
+        </div>
+        <div>
+            <div class="nameH50">
+                <h3>{{ course.name }}</h3>
+            </div>
+            <div class="H150">
+                <div>
+                    <h4>机构：{{ course.org }}</h4>
+                    <h4>描述：{% if course.desc %}{{ course.desc }}{% endif %}</h4>
+                    <h4>课程类别：{{ course.category }}</h4>
+                </div>
+
+                <div>
+                    <h4>学习人数：{{ course.students }}</h4>
+                    <h4>章节数：{{ course.lesson_nums }}</h4>
+                    <h4>收藏数：{{ course.fav_nums }}</h4>
+                </div>
+            </div>
+        </div>
+
+    </div>

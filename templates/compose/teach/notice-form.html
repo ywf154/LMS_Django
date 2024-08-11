@@ -1,0 +1,11 @@
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-row">
+        <strong>标题：</strong>{{ form.title }}
+        <button type="submit" class="btn btn-primary">提交</button>
+    </div>
+    <div>
+        {{ form.media }}
+        {{ form.content }}
+    </div>
+</form>

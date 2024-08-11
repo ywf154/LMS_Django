@@ -2,12 +2,12 @@ from django.contrib import admin
 from django.urls import reverse
 from django.utils.html import format_html
 from operations.models import *
-from organizations.models import CourseOrg
+from organizations.models import Org
 
 
 class BannerAdmin(admin.ModelAdmin):
     list_display = ('image_display', 'title', 'display_actions')
-    fields = ('image', 'title', 'url', 'index')
+    fields = ('image', 'title', 'url', )
 
     def image_display(self, obj):
         return format_html('<img src="{}" width="200" height="100" alt="Image">', obj.image.url)
@@ -57,7 +57,7 @@ class UserFavoriteAdmin(admin.ModelAdmin):
 
     def OrgOrCourse(self, obj):
         if obj.fav_type == 1:  # 收藏类型为课程机构
-            course_org = CourseOrg.objects.filter(id=obj.fav_id).first()
+            course_org = Org.objects.filter(id=obj.fav_id).first()
             if course_org:
                 return course_org.name
         elif obj.fav_type == 2:  # 收藏类型为课程

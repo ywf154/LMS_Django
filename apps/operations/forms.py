@@ -1,8 +1,6 @@
 from django import forms
 
-from DjangoUeditor.widgets import UEditorWidget
 from operations.models import UserFavorite, CourseComments, Task
-from DjangoUeditor.forms import UEditorField, UEditorModelForm
 
 
 class UserFavForm(forms.ModelForm):

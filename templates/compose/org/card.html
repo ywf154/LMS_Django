@@ -1,0 +1,18 @@
+  <div class="ListCard">
+        {% for org in orgs %}
+            <div>
+                <a href="{% url 'OrgDetail' org.id %}">
+                    <img src="{{ MEDIA_URL }}{{ org.image }}" class="card-img-top" alt="机构封面图片">
+                </a>
+                <section>
+                    <a href="{% url 'OrgDetail' org.id %}">
+                        <h3 class="card-title">{{ org.name }}</h3>
+                    </a>
+                    <h4 class="card-text">地区：<strong>{{ org.city }}</strong></h4>
+                    <h4 class="card-text">学习人数：<strong>{{ org.students }}</strong></h4>
+                    <h4 class="card-text">课程数：<strong>{{ org.course_num }}</strong></h4>
+                </section>
+
+            </div>
+        {% endfor %}
+    </div>

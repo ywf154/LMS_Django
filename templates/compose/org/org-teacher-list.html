@@ -1,0 +1,7 @@
+<div><h2>机构教师</h2></div>
+
+<div class="ListCard">
+    {% for teacher in org.teacher_set.all %}
+        {% include 'compose/course/teacher-detail.html' with teacher=teacher %}
+    {% endfor %}
+</div>

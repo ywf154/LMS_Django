@@ -1,0 +1,23 @@
+{% if data == 1 %}
+
+<button class="btn btn-primary btn-lg"id="CDetailF">Edite the detail</button>
+
+{% else %}
+<div id="form" style="display: none;margin-left: 100px">
+    <form method="post" enctype="multipart/form-data" action="{% url 'pD' course.id %}">
+        {% csrf_token %}
+        {{ DitailForm.media }}
+        {{ DitailForm.detail }}
+        <button type="submit" class="btn btn-primary" >Update</button>
+    </form>
+</div>
+
+
+<script>
+    document.getElementById('CDetailF').addEventListener('click', function () {
+        document.getElementById('form').style.display = 'block';
+        document.getElementById('ShowD').style.display = 'none';
+    });
+</script>
+
+{% endif %}

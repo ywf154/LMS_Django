@@ -1,50 +1,69 @@
-{% extends 'base.html' %}
-{% block title %}用户注册{% endblock %}
+{% extends 'compose/base/login_resister_view.html' %}
+{% block title %}Sign up{% endblock %}
 
-{% block content %}
-    <a href="{% url "index" %}"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>返回</a>
-    {#    <form action="" method="post" class="form-control">#}
-    {##}
-    {#            {% csrf_token %}#}
-    {#            {{ form.as_p }}#}
-    {##}
-    {#            <button type="submit">提交注册</button>#}
-    {#     #}
-    {#    </form>#}
+{% block form %}
 
+    <div class="sign-form">
+        <form action="{% url 'register' %}" method="post" class="row g-3">
+            {% csrf_token %}
 
-    <form action="" method="post" class="form-control">
-        {% csrf_token %}
+            <div class="mb-3">
+                <input type="text" class="form-control" name="username" placeholder="User Name">
+            </div>
 
-        <div class="form-group">
-            <label for="id_username">用户名</label>
-            {{ form.username }}
-        </div>
+            <div class="mb-3">
+                <input type="email" class="form-control" name="email" placeholder="Email">
+            </div>
 
+            <div class="mb-3">
+                <input type="text" class="form-control" name="mobile" placeholder="Phone Number">
+            </div>
 
-        <div class="form-group">
-            <label for="id_email">电子邮箱</label>
-            {{ form.email }}
-        </div>
-        <div class="form-group">
-            <label for="id_phone">电话号码</label>
-            {{ form.mobile }}
-        </div>
-        <div class="form-group">
-            <label for="id_password">密码</label>
-            {{ form.password1 }}
-        </div>
-        <div class="form-group">
-            <label for="id_password">确认密码</label>
-            {{ form.password2 }}
-        </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" name="password1" placeholder="Password">
+            </div>
 
+            <div class="mb-3">
+                <input type="text" class="form-control" name="password2" placeholder="Confirm Password">
+            </div>
 
-        <div class="alert alert-warning" role="alert">
-            注意事项：{{ form.errors }}
-        </div>
-        <button type="submit" class="btn btn-primary">提交注册</button>
-    </form>
+            {% if form.errors %}
+                <strong class="errors">tips:{{ form.errors }}</strong>
+            {% endif %}
+
+            <div class="buttons">
+                <button type="submit" class="btn btn-success btn-lg">Sign up</button>
+                <a type="button" class="btn btn-warning btn-lg" href="{% url 'login' %}">Sign in</a>
+            </div>
+
+        </form>
+    </div>
 
 
+    <style>
+        .sign-form {
+            margin-top: 100px;
+            margin-right: 100px;
+
+        }
+
+        .mb-3 {
+            margin-top: 10px;
+            width: 350px;
+        }
+
+        .buttons {
+            margin-top: 20px;
+        }
+
+        .form-label {
+            font-size: 20px;
+        }
+
+        .errors {
+            font-size: 20px;
+            color: #c12e2a;
+        }
+
+    </style>
 {% endblock %}

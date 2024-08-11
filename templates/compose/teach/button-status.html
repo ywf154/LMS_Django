@@ -1,0 +1,31 @@
+<button type="button"
+        {% if course.status %}
+        class="btn btn-danger btn-lg"
+        {% else %}
+        class="btn btn-success btn-lg"
+        {% endif %}
+        data-toggle="modal" data-target="#statusModal{{ course.id }}">
+    {% if course.status %}Hide{% else %}Show{% endif %}
+</button>
+
+
+<!-- Modal -->
+<div class="modal fade" id="statusModal{{ course.id }}" tabindex="-1" role="dialog" aria-labelledby="statusModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="statusModalLabel">Are you sure?</h4>
+            </div>
+            <div class="modal-body">
+               {% if course.status %} Hide {% else %} Show {% endif %}
+                "{{ course.name }}"
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <a type="button" class="btn btn-primary" {% if course.status %} href="{% url 'undisplay_course' course.id %}" {% else %} href="{% url 'display_course' course.id %}" {% endif %}>I am sure!</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,67 +1,12 @@
-{% extends 'base.html' %}
+{% extends 'compose/base/layout.html' %}
+{% block title %}内容列表{% endblock %}
 {% block content %}
-    <div>
-        <a href="{% url 'add_lesson' lesson.course.id %}">
-            <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>返回
-        </a>
-    </div>
-
+<div>
+    {% include 'compose/common/back-to-url.html' with url='add_lesson' data=lesson.course.id lg=1 %}
+    {% include 'compose/teach/add-content-form.html' %}
+    {% include 'compose/common/delete.html' with url='delete_lesson' id=lesson.id data=1 %}
+</div>
     <div style="overflow: auto;">
-
-        <div style="float: left;">
-            <table>
-                <caption><h3>{{ lesson.name }}</h3></caption>
-                <colgroup>
-                    <col style="width: 200px;">
-                    <col style="width: 60px;">
-                    <col style="width: 60px;">
-                </colgroup>
-                {% for content in contents %}
-                    <tr>
-                        <td><h4>{{ content.name }}</h4></td>
-                        <td><a href="{% url 'Content_edit' content.id %}">编辑</a></td>
-                        <td><a href="{% url 'Content_delete' content.id %}">删除</a></td>
-
-                    </tr>
-                {% endfor %}
-
-                <tr>
-                    <form method="post" enctype="multipart/form-data">
-                        <td>
-                            {% csrf_token %}
-                            {{ form }}
-                        </td>
-                        <td>
-                            <button type="submit" class="btn btn-primary">新增</button>
-                        </td>
-                    </form>
-                </tr>
-            </table>
-        </div>
-
-        <div style="float: right;width: 300px">
-            <h4>作业</h4>
-            {% for content in contents %}
-                <td><h4>{{ content.name }}</h4></td>
-                {% for task in content.task_set.all %}
-                    <ol>
-                        <li>
-                            <a href="{% url 'showTask' task.id %}">{{ task.user.username }}的作业</a>
-                            <p>
-                                {% if task.grade == 0 %}
-                                    成绩为0或暂无批改
-                                {% else %}
-                                    成绩：{{ task.grade }}
-                                {% endif %}
-                            </p>
-                        </li>
-                    </ol>
-                {% endfor %}
-            {% endfor %}
-        </div>
-
-
+        {% include 'compose/teach/content-edite-list.html' %}
     </div>
-
-
 {% endblock %}
