@@ -1,0 +1,45 @@
+<button type="button" class="btn btn-success btn-sm" data-toggle="modal"
+        data-target="#historyNoticeModal">History Notice
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="historyNoticeModal" tabindex="-1" role="dialog"
+     aria-labelledby="historyNoticeModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="historyNoticeModalLabel">{{ historyMsg.notice.title }}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        {% for userMsg in userMsgs_has_read %}
+                            <div class="col-md-10">
+                                {% include 'compose/user/notice-table.html' %}
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-primary" type="button" data-toggle="collapse"
+                                        data-target="#collapse{{ userMsg.id }}" aria-expanded="false"
+                                        aria-controls="collapseExample">
+                                    Detail
+                                </button>
+                            </div>
+                            <div class="collapse" id="collapse{{ userMsg.id }}">
+                                <div class="well">
+                                    {{ userMsg.notice.content|safe }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <a type="button" class="btn btn-primary" href="">Clean</a>
+            </div>
+        </div>
+    </div>
+</div>

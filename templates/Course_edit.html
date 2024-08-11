@@ -1,7 +1,6 @@
-{% extends 'base.html' %}
+{% extends 'compose/base/layout.html' %}
 {% block title %}课程界面{% endblock %}
 {% block content %}
-
 
 
     <div class="bread">
@@ -10,56 +9,13 @@
             <li><a href="{% url 'teacherZoom' %}">教师课程</a></li>
             <li><a href="{% url 'Course_edit' course_id %}">课程门户</a></li>
         </ul>
-        <a href="{% url 'teacherZoom' %}">
-            <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>返回
-        </a>
+    {% include 'compose/common/back-to-url.html' with url='teacherZoom' %}
     </div>
-
 
     <!-- 信息-->
-    <div class="Detail">
-        <div class="Img">
-            <img src="{{ MEDIA_URL }}{{ course.image }}">
-        </div>
-        <div>
-            <div class="nameH50">
-                <h3>{{ course.name }}</h3>
-            </div>
-            <div class="H150">
-                <div>
-                    <h4>机构：{{ course.org }}</h4>
-                    <h4>描述：{% if course.desc %}{{ course.desc }}{% endif %}</h4>
-                    <h4>课程类别：{{ course.category }}</h4>
-                </div>
+        {% include 'compose/course/course-base-detail.html' %}
+        {% include 'compose/teach/course-nav.html' %}
 
-                <div>
-                    <h4>学习人数：{{ student_count }}</h4>
-                    <h4>章节数：{{ content_count }}</h4>
-                    <h4>收藏数：{{ fav_count }}</h4>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- 导航-->
-    <div class="nav4">
-        <ul>
-            <!-- 这里直接引用课程详情的home -->
-            <li><a href="{% url 'Course_edite_home' course_id %}">
-                <span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;课程首页
-            </a></li>
-            <li><a href="{% url 'Course_edit_desc' course_id %}">
-                <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp;基本信息
-            </a></li>
-            <li><a href="{% url 'add_notice' course_id %}">
-                <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;通知
-            </a></li>
-            <li><a href="{% url 'add_lesson' course_id %}">
-                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp;章节
-            </a></li>
-        </ul>
-    </div>
 
     {% block branch %}
     {% endblock %}

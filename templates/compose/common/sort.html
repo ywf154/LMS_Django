@@ -1,0 +1,14 @@
+    <ul class="nav-list">
+        <li>&nbsp;&nbsp;Sort&nbsp;&nbsp;</li>
+        <li {% if sort == "" %} class="active" {% endif %} style="display: inline;">
+            <a href="?categ={{ categ }}&search={{ search }}&sort=">全部</a>
+        </li>
+
+        <li {% if sort == "students" %} class="active" {% endif %} style="display: inline;">
+            <a href="?categ={{ categ }}&search={{ search }}&sort=students">学习人数</a>
+        </li>
+
+        <li {% if sort == "fav_nums" %} class="active" {% endif %} style="display: inline;">
+            <a href="?categ={{ categ }}&search={{ search }}&sort=fav_nums">收藏数</a>
+        </li>
+    </ul>

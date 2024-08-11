@@ -1,0 +1,11 @@
+<ul class="nav-list">
+    <li>City</li>
+    <li {% if search == '' %} class="active" {% endif %}>
+        <a href="?categ={{ categ }}&search=&sort={{ sort }}">全部</a>
+    </li>
+    {% for city in all_citys %}
+        <li {% if search == city.id|stringformat:"i" %} class="active" {% endif %}>
+            <a href="?search={{ city.id }}&categ={{ categ }}&sort={{ sort }}">{{ city.name }}</a>
+        </li>
+    {% endfor %}
+</ul>

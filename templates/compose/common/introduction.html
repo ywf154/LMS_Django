@@ -1,0 +1,12 @@
+<div>
+    <h2>
+        {% if data == org.desc %}机构介绍{% else %}课程介绍{% endif %}
+    </h2>
+</div>
+{% if data %}
+    <div>
+        {{ data|safe }}
+    </div>
+{% else %}
+    <p>暂无内容</p>
+{% endif %}

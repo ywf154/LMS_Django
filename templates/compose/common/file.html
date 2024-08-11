@@ -1,0 +1,6 @@
+    <strong>课程资源预览：</strong>
+    {% if content.file %}
+        <a href="{{ content.file.url }}">Download File</a>
+    {% else %}
+        <span style="color: #c12e2a">Empty</span>
+    {% endif %}

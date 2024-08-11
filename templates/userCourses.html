@@ -1,9 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'compose/base/layout.html' %}
 {% block title %}我的课程{% endblock %}
 {% block content %}
-    <div>
-        <a href="/"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>返回主页</a>
-    </div>
+{% include 'compose/common/back-to-url.html' with url='index'%}
     <div class="ListCard">
         {% for course in courses %}
             <div>

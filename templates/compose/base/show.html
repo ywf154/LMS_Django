@@ -1,0 +1,22 @@
+<h4> {{ title }}</h4>
+{% if data %}
+{% for item in data %}
+
+
+
+        <a href="/{{ link }}/{{ item.id }}/">
+            {% if name == 1 %}
+                <img src="{{ MEDIA_URL }}{{ item.image }}" class="card-img-top"
+                     style="width: 30px;height: 30px;margin-top: 5px" alt="">
+                {{ item.name }}
+            {% else %}
+                <img src="{{ MEDIA_URL }}{{ item.image }}" class="card-img-top"
+                     style="width: 50px;height: 50px;margin-top: 5px;margin-left: 5px" alt="">
+            {% endif %}
+        </a>
+
+
+{% endfor %}
+{% else %}
+    Empty now!
+ {% endif %}

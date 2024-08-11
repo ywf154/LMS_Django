@@ -1,0 +1,24 @@
+{% if data == 1 %}
+    <button class="btn btn-primary btn-lg" id="TSKBT">Edite Your Task</button>
+{% else %}
+    <div id="TSK" style="display: none;margin-left: 28px;margin-top: 20px">
+        {% if not task %}
+            <form method="post" action="{% url 'task' content.id %}">
+        {% else %}
+            <form method="post" action="{% url 'editTask' content.id %}">
+        {% endif %}
+        {{ form.media }}
+        {% csrf_token %}
+        {{ form }}
+        <span class="glyphicon glyphicon-saved" aria-hidden="true"></span><input type="submit" value="提交">
+        </form>
+
+    </div>
+
+    <script>
+        document.getElementById('TSKBT').addEventListener('click', function () {
+            document.getElementById('ContentShow').style.display = 'none';
+            document.getElementById('TSK').style.display = 'block';
+        });
+    </script>
+{% endif %}

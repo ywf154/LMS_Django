@@ -1,46 +1,16 @@
-{% extends 'base.html' %}
+{% extends 'compose/base/layout.html' %}
 {% block title %}章节内容编辑{% endblock %}
 {% block content %}
 
-    {% if messages %}
-        {% for message in messages %}
-            <script>alert("{{ message }}");</script>
-        {% endfor %}
-    {% endif %}
-    <!-- <div style="overflow: auto; "> -->
-    <div>
-        <div style="margin-left: 10px;margin-left: 10px;">
-            <form method="post" enctype="multipart/form-data">
-                <div>
-                    <a href="{% url 'Lesson_edit' content.lesson.id %}">
-                        <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>返回
-                    </a>
-                    <button type="submit" class="btn btn-primary btn-sm">保存</button>
-                </div>
-                <div>
-                {{ form.media }}
-                {% csrf_token %}
-                    章节名称：{{ form.name }}
-                    {{ form.learning_space }}
-                {{ errs }}
-                </div>
+    {% include 'compose/common/back-to-url.html' with url='Lesson_edit' data=content.lesson.id lg=1 %}
+    {% include 'compose/teach/content-edite-form.html' with data=1 %}
+    {% include 'compose/teach/content-show.html' with data=1 %}
+    {% include 'compose/teach/uploadfile.html' %}
+    {% include 'compose/teach/task-list.html' with data=1 %}
+    {% include 'compose/common/file.html'%}
 
+    {% include 'compose/teach/content-edite-form.html' %}
+    {% include 'compose/teach/content-show.html' %}
+ {% include 'compose/teach/task-list.html' %}
 
-            </form>
-        </div>
-        <div>
-            <li>
-                <a href="{% url 'uploadfile' content.id %}"><span class="glyphicon glyphicon-pushpin"
-                                                                  aria-hidden="true"></span>上传课件</a>
-            </li>
-            预览：
-            <ol>
-                {% for courseResource in courseResources %}
-                    <li>
-                        {{ courseResource.name }}
-                    </li>
-                {% endfor %}
-            </ol>
-        </div>
-    </div>
 {% endblock %}

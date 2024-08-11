@@ -1,0 +1,24 @@
+{% if data == 1 %}
+<li><a data-toggle="modal" data-target="#PWDFormModal" >Change Your Password</a></li>
+{% else %}
+<!-- 弹出框 -->
+<div class="modal fade" id="PWDFormModal" tabindex="-1" role="dialog" aria-labelledby="PWDFormModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="PWDFormModal">Update Your Information</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'CPW' %}">
+                    {% csrf_token %}
+                    {{ pwd_form }}
+                    <button id="submit" type="submit" class="btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}

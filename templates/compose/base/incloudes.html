@@ -1,0 +1,34 @@
+{#-------------------------#}
+{#------引出资源文件----------#}
+{#-------------------------#}
+
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="zh-hans">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+            {#------------------网页标题----------------------------#}
+        {% endblock %}
+    </title>
+
+    <link rel="stylesheet" href="{{ STATIC_URL }}bootstrap-3.4.1/css/bootstrap.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}mycss.css">
+    <script src="{{ STATIC_URL }}bootstrap-3.4.1/js/jQuery.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css">
+</head>
+
+{% block layout %}
+    {#------------------内容----------------------------#}
+{% endblock %}
+
+
+
+
+
+<script src="{{ STATIC_URL }}bootstrap-3.4.1/js/jQuery.js"></script>
+<script src="{{ STATIC_URL }}bootstrap-3.4.1/js/bootstrap.js"></script>
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+
+  <div class="container">
+    <button class="prevBtn" style="width: 50px; height: 400px;">&lt;</button>
+    <div id="slider">
+        {% for slider in banners %}
+            <div class="slide">
+                <img src="{{ slider.image.url }}" alt="{{ slider.title }}" style="width: 750px; height: 400px;">
+            </div>
+        {% endfor %}
+    </div>
+    <button class="nextBtn" style="width: 50px; height: 400px;">&gt;</button>
+</div>
+
+
+<script>
+    var slider = document.getElementById('slider');
+    var slides = slider.getElementsByClassName('slide');
+    var currentIndex = 0;
+
+    var prevBtn = document.querySelector('.prevBtn');
+    var nextBtn = document.querySelector('.nextBtn');
+
+    function showSlide(index) {
+        for (var i = 0; i < slides.length; i++) {
+            slides[i].classList.remove('active');
+        }
+        slides[index].classList.add('active');
+    }
+
+    prevBtn.addEventListener('click', function () {
+        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        showSlide(currentIndex);
+    });
+
+    nextBtn.addEventListener('click', function () {
+        currentIndex = (currentIndex + 1) % slides.length;
+        showSlide(currentIndex);
+    });
+
+    function autoSlide() {
+        currentIndex = (currentIndex + 1) % slides.length;
+        showSlide(currentIndex);
+    }
+
+    var timer = setInterval(autoSlide, 3000);
+
+    window.addEventListener('load', function () {
+        showSlide(currentIndex);
+    });
+</script>
+
+
+
+<style>
+    .container {
+        display: flex;
+        align-items: center;
+    }
+
+    #slider {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .slide {
+        display: none;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    .slide.active {
+        display: block;
+    }
+
+    .prevBtn,
+    .nextBtn {
+        background-color: #d3c7c7;
+        font-size: 60px;
+        padding: 8px;
+        border: none;
+        cursor: pointer;
+    }
+</style>

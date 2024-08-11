@@ -1,100 +1,19 @@
-{% extends 'base.html' %}
+{% extends 'compose/base/layout.html' %}
 {% block title %}所授课程{% endblock %}
 {% block content %}
-    <div id="msg">
-        {% for mss in messages %}
-            <div class="alert alert-success" role="alert">{{ mss.message }}</div>
-        {% endfor %}
+<div style="margin: 15px 10px;">
+    {% include 'compose/common/back-to-url.html' with url='index' %}
+    {% include 'compose/teach/teacher-form.html' %}
+    {% include 'compose/teach/add-course-form.html' %}
+    <div style="margin-top: 10px">
+        {% include 'compose/common/search.html' %}
+        {% include 'compose/common/category.html' %}
+        {% include 'compose/common/sort.html' %}
     </div>
 
-
-    <div>
-        <a href="/">
-            <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>返回
-        </a>
-    </div>
-    hallo! {{ name }}
-
-
-    <!-- 弹出框触发按钮 -->
-    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal">
-        新增
-    </button>
-
-    <!-- 弹出框 -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">新增</h4>
-                </div>
-                <div class="modal-body">
-                    <form id="myForm" method="post">
-                        {% csrf_token %}
-                        {{ form }}
-                        <button id="submit" type="submit" class="btn-primary">提交</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        $(document).ready(function () {
-            $('#myForm').on('submit', function (event) {
-                event.preventDefault(); // 阻止默认的表单提交行为
-                // 获取表单数据
-                var formData = $(this).serialize();
-                // 发送 AJAX 请求
-                $.ajax({
-                    url: $(this).attr('action'),
-                    method: $(this).attr('method'),
-                    data: formData,
-                    success: function (response) {
-                        // 隐藏模态框
-                        $('#myModal').modal('hide');
-                        // 刷新原来的页面
-                        window.location.reload();
-                    },
-                    error: function (xhr, status, error) {
-                    }
-                });
-            });
-        });
-    </script>
-
-
-    <div class="ListCard">
-        {% for course in courses %}
-            <div>
-                <a href="{% url 'Course_edit' course.id %}">
-                    <img src="{{ MEDIA_URL }}{{ course.image }}" class="card-img-top" alt="课程封面图片">
-                </a>
-                <section>
-                    <a href="{% url 'Course_edit' course.id %}">
-                        <h3>{{ course.name }}</h3>
-                    </a>
-                    <h4>机构：<strong>{{ course.org }}</strong></h4>
-                    <h4>课程描述：<strong>{{ course.desc }}</strong></h4>
-                    <h4>课程描述：<strong>{{ course.category }}</strong></h4>
-                    {% if course.status %}
-                        <h4>课程状态：<strong style="color: #05ef0a">开启</strong></h4>
-                        <a href="{% url 'undisplay_course' course.id %}"><span class="glyphicon glyphicon-eye-close"
-                                                                               aria-hidden="true"></span>关闭课程</a>
-                    {% else %}
-                        <h4>课程状态：<strong style="color: #c12e2a">关闭</strong></h4>
-                        <a href="{% url 'display_course' course.id %}"><span class="glyphicon glyphicon-eye-open"
-                                                                             aria-hidden="true"></span>开启课程</a>
-                    {% endif %}
-
-                </section>
-
-            </div>
-        {% endfor %}
-    </div>
-
+    {% include 'compose/teach/course-list.html' with teacher=user.teacher %}
+    {% include 'compose/common/pagination.html' with obj=courses %}
+</div>
+{# #}
 
 {% endblock %}

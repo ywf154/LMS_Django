@@ -1,0 +1,38 @@
+<button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#course_desc">
+    Update information of your course
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="course_desc" tabindex="-1" role="dialog" aria-labelledby="course_descModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="course_descModalLabel">
+                    Update information of your course
+                </h4>
+            </div>
+            <form method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+
+                    {% csrf_token %}
+
+                    <h3 style="  display: inline-block;width: 400px; overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+                        <strong>课程封面：</strong>{{ form.image }}
+                    </h3>
+                    <h3><strong>课程名称：</strong>{{ form.name }}</h3>
+                    <h3><strong>课程类别：</strong>{{ form.category }}</h3>
+                    <h3><strong>课程描述：</strong>{{ form.desc }}</h3>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="container-fluid">
+
+    <div class="row">
+        {% for userMsg in userMsgs %}
+            <div class="col-md-3">
+                {% include 'compose/user/notice-table.html' %}
+                {% include 'compose/user/button-notice-detail.html' with data=1 %}
+            </div>
+        {% endfor %}
+    </div>
+
+</div>
+<style>
+    .col-md-3 {
+        border-radius: 10px; /* 圆角半径为 10 像素 */
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); /* 水平偏移量、垂直偏移量、模糊半径、颜色 */
+    }
+</style>

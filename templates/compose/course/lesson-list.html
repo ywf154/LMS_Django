@@ -1,0 +1,19 @@
+{% for lesson in lesson_list %}
+    <div class="chapter-list">
+        <div class="lessonTitle">
+            <h3><span class="glyphicon glyphicon-tasks" aria-hidden="true"
+                      style="vertical-align: middle; margin-right: 1px;"></span>{{ lesson.name }}</h3>
+        </div>
+        <div class="contentTitle">
+            {% for content in lesson.content_set.all %}
+                <a href="{% url 'Course_learn' content.id %}">
+                    <div>
+                        <h4><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            {{ content.name }}
+                        </h4>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endfor %}

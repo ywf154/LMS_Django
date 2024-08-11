@@ -1,7 +1,6 @@
-{% extends 'base.html' %}
+{% extends 'compose/base/layout.html' %}
 
 {% block title %}课程列表{% endblock %}
-
 
 {% block content %}
 
@@ -10,115 +9,19 @@
             <a href="{% url 'index' %}">首页</a>>
             <a href="{% url 'CourseList' %}">课程</a>
         </ul>
-        <a href="{% url 'index' %}">
-            <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>返回
-        </a>
+        {% include 'compose/common/back-to-url.html' with url='index' %}
     </div>
 
     <div style="margin-top: 10px">
-        <!-- 搜索 -->
-        <ul class="nav-list">
-            <li>搜索</li>
-
-            <li>
-                <form action="/CourseList/?categ={{ categ }}&tag={{ tag }}&sort=" method="get">
-                    <label>
-                        <input type="text" name="tag" value="{{ tag }}">
-                    </label>
-                    <button type="submit">搜索</button>
-                </form>
-            </li>
-            <li><a href="?categ={{ categ }}&tag=&sort={{ sort }}">清空</a></li>
-        </ul>
-        <!-- 课程类别 -->
-        <ul class="nav-list">
-            <li>课程类别</li>
-            <li {% if categ == '' %} class="active" {% endif %}>
-                <a href="?categ=&tag={{ tag }}&sort={{ sort }}">全部</a>
-            </li>
-            {% for category in categs %}
-                <li {% if categ == category %} class="active" {% endif %}>
-                    <a href="?categ={{ category }}&tag={{ tag }}&sort={{ sort }}">{{ category }}</a>
-                </li>
-            {% endfor %}
-        </ul>
-
-
-        <!-- 排序 -->
-        <ul class="nav-list">
-            <li>&nbsp;&nbsp;排&nbsp;&nbsp;&nbsp;序&nbsp;&nbsp;</li>
-            <li {% if sort == "" %} class="active" {% endif %} style="display: inline;">
-                <a href="?categ={{ categ }}&tag={{ tag }}&sort=">全部</a>
-            </li>
-
-            <li {% if sort == "students" %} class="active" {% endif %} style="display: inline;">
-                <a href="?categ={{ categ }}&tag={{ tag }}&sort=students">学习人数</a>
-            </li>
-
-            <li {% if sort == "course_nums" %} class="active" {% endif %} style="display: inline;">
-                <a href="?categ={{ categ }}&tag={{ tag }}&sort=course_nums">收藏数</a>
-            </li>
-        </ul>
-
+        {% include 'compose/common/search.html' with data=1 %}
+        {% include 'compose/common/category.html' %}
+        {% include 'compose/common/sort.html' %}
     </div>
-
-
-
-
-
     {#课程列表#}
-
-    <div class="ListCard">
-        {% for course in courses %}
-            <div>
-                <a href="{% url 'CourseDetail' course.id %}">
-                    <img src="{{ MEDIA_URL }}{{ course.image }}" class="card-img-top" alt="课程封面图片">
-                </a>
-                <section>
-                    <a href="{% url 'CourseDetail' course.id %}">
-                        <h3>{{ course.name }}</h3>
-                    </a>
-                    <h4>机构：<strong>{{ course.org }}</strong></h4>
-                    <h4>教师：<strong>{{ course.teacher }}</strong></h4>
-                    <h4>课程描述：<strong>{{ course.desc }}</strong></h4>
-
-                </section>
-
-            </div>
-        {% endfor %}
-    </div>
-
+    {% include 'compose/course/card.html' %}
 
     <!-- 分页 -->
-
-    <div class="pagination-container">
-        <nav aria-label="Page navigation">
-            <ul class="pagination pagination-lg">
-                {% if courses.has_previous %}
-                    <li>
-                        <a href="?page={{ courses.previous_page_number }}&categ={{ categ }}&tag={{ tag }}&sort={{ sort }}">上一页</a>
-                    </li>
-                {% endif %}
-
-                {% for thispage in courses.paginator.page_range %}
-                    <li>
-                        <a href="?page={{ thispage }}&categ={{ categ }}&tag={{ tag }}&sort={{ sort }}">{{ thispage }}</a>
-                    </li>
-                {% endfor %}
-
-                {% if courses.has_next %}
-                    <li>
-                        <a href="?page={{ courses.next_page_number }}&categ={{ categ }}&tag={{ tag }}&sort={{ sort }}">下一页</a>
-                    </li>
-                {% endif %}
-            </ul>
-        </nav>
-    </div>
-
-
-
-
-
+    {% include 'compose/common/pagination.html' with obj=courses %}
 
 
 {% endblock %}

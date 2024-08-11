@@ -2,64 +2,8 @@
 {% block title %}{{ org.name }}详情{% endblock %}
 {% block branch %}
 
-<div><h2>机构介绍</h2></div>
-    {% if org.desc %}
-        <div>
-            {{ org.desc|safe }}
-        </div>
-    {% else %}
-        <p>暂无内容</p>
-    {% endif %}
-    
-<div><h2>机构课程</h2></div>
+{% include 'compose/common/introduction.html' with data=org.desc %}
+{% include 'compose/org/org-course-list.html' %}
+{% include 'compose/org/org-teacher-list.html' %}
 
-        <div class="ListCard">
-            {% for course in org_course_set_all %}
-                <div>
-                    <a href="{% url 'CourseDetail' course.id %}">
-                        <img src="{{ MEDIA_URL }}{{ course.image }}" class="card-img-top" alt="课程封面图片">
-
-                        <section>
-                            <h3>{{ course.name }}</h3>
-                            <h4>机构：<strong>{{ course.org }}</strong></h4>
-                            <h4>教师：<strong>{{ course.teacher }}</strong></h4>
-                            <h4>课程描述：<strong>{{ course.desc }}</strong></h4>
-
-                        </section>
-                    </a>
-                </div>
-            {% endfor %}
-        </div>
-    
-<div><h2>机构教师</h2></div>
-
-    <div class="ListCard">
-        {% for teacher in org.teacher_set.all %}
-            <div>
-                <a href="">
-                    <img src="{{ MEDIA_URL }}{{ teacher.image }}" class="card-img-top" alt="头像">
-                </a>
-                <section>
-                    <h3 class="card-title">{{ teacher.name }}</h3>
-                    <h4>机构：<strong>{{ teacher.org }}</strong></h4>
-                    <h4>工作年限：<strong>{{ teacher.work_years }}</strong></h4>
-                    <h4>工作单位：<strong>{{ teacher.work_company }}</strong></h4>
-                    <h4>职务：<strong>{{ teacher.work_position }}</strong></h4>
-                    <h4>教学特点：<strong>{{ teacher.points }}</strong></h4>
-                </section>
-
-            </div>
-        {% endfor %}
-    </div>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 {% endblock %}

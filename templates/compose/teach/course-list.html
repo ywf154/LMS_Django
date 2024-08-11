@@ -1,0 +1,69 @@
+<table class="table-hover">
+    <tr class="title-tr">
+        <td style="width: 20%">Course Cover</td>
+        <td style="width: 10%">Course title</td>
+        <td style="width: 50px">Course category</td>
+        <td style="width: 20px">Number of students</td>
+        <td style="width: 20px">Number of clicked</td>
+        <td style="width: 20px">Number of collections</td>
+        <td style="width: 50px">Status</td>
+        <td style="width: 50px">Operate</td>
+    </tr>
+    {% for course in courses %}
+        <tr>
+            <th>
+                <img src="{{ MEDIA_URL }}{{ course.image }}">
+            </th>
+            <th>{{ course.name }}</th>
+            <th>{{ course.category }}</th>
+            <th>{{ course.students }}</th>
+            <th>{{ course.click_nums}}</th>
+            <th>{{ course.fav_nums }}</th>
+            {% if course.status %}
+                <th style="color: #09e809">displayed</th>
+            {% else %}
+                <th style="color: #ee1208">hidden</th>
+            {% endif %}
+            <th>
+                {% include 'compose/teach/button-status.html' %}
+                <a type="button" class="btn btn-primary btn-lg" href="{% url 'Course_edit' course.id %}">Open up</a>
+            </th>
+        </tr>
+    {% endfor %}
+</table>
+
+
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .title-tr {
+        background-color: #eee9e9;
+    }
+
+    img {
+        width: 150px;
+        height: 100px;
+
+        object-fit: cover; /* 设置图片填充方式为 cover */
+    }
+
+    {#    .imgtr {#}
+    {#    margin: 5px 50px;#}
+    {#    width: 50px;#}
+    {#    height: 50px;#}
+    {#    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);#}
+    {#    border-radius: 15px;#}
+    {##}
+    {
+    #}#}
+</style>

@@ -24,7 +24,3 @@ class UserProfile(AbstractUser):
 
     def __str__(self):
         return self.username
-
-    def unread_nums(self):
-        # 未读消息数量
-        return self.usermessage_set.filter(has_read=False).count()

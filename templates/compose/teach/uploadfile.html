@@ -1,0 +1,32 @@
+<button type="button" class="btn btn-success btn-lg"
+        data-toggle="modal" data-target="#uploadModal"
+        data-whatever="@mdo">
+    Upload Files
+</button>
+
+<div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="uploadModalLabel">上传课件</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form action="{% url 'uploadfile' content.id %}" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    {% csrf_token %}
+                    {{ file_form }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary btn-lg">upload</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

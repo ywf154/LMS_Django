@@ -1,0 +1,85 @@
+<button type="button" class="btn btn-default navbar-btn" data-bs-toggle="modal" data-bs-target="#regModal" data-bs-whatever="@mdo">
+    注册
+</button>
+
+
+
+<div class="modal fade" id="regModal" tabindex="-1" aria-labelledby="regModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="regModalLabel">New message</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Recipient:</label>
+            <input type="text" class="form-control" id="recipient-name">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Message:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Send message</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{#    <form action="" method="post" class="form-control">#}
+{#        {% csrf_token %}#}
+{##}
+{#        <div class="form-group">#}
+{#            <label for="id_username">用户名</label>#}
+{#            {{ form.username }}#}
+{#        </div>#}
+{##}
+{##}
+{#        <div class="form-group">#}
+{#            <label for="id_email">电子邮箱</label>#}
+{#            {{ form.email }}#}
+{#        </div>#}
+{#        <div class="form-group">#}
+{#            <label for="id_phone">电话号码</label>#}
+{#            {{ form.mobile }}#}
+{#        </div>#}
+{#        <div class="form-group">#}
+{#            <label for="id_password">密码</label>#}
+{#            {{ form.password1 }}#}
+{#        </div>#}
+{#        <div class="form-group">#}
+{#            <label for="id_password">确认密码</label>#}
+{#            {{ form.password2 }}#}
+{#        </div>#}
+{##}
+{##}
+{#        <div class="alert alert-warning" role="alert">#}
+{#            注意事项：{{ form.errors }}#}
+{#        </div>#}
+{#        <button type="submit" class="btn btn-primary">提交注册</button>#}
+{#    </form>#}
+
+
+<script>
+    const regModal = document.getElementById('regModal')
+regModal.addEventListener('show.bs.modal', event => {
+  // Button that triggered the modal
+  const button = event.relatedTarget
+  // Extract info from data-bs-* attributes
+  const recipient = button.getAttribute('data-bs-whatever')
+  // If necessary, you could initiate an AJAX request here
+  // and then do the updating in a callback.
+  //
+  // Update the modal's content.
+  const modalTitle = regModal.querySelector('.modal-title')
+  const modalBodyInput = regModal.querySelector('.modal-body input')
+
+  modalTitle.textContent = `New message to ${recipient}`
+  modalBodyInput.value = recipient
+})
+</script>

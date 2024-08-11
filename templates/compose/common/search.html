@@ -1,0 +1,14 @@
+<ul class="nav-list">
+    <li>
+        <form action="/{% if data == 1 %}CourseList{% else %}teacherZoom{% endif %}/?categ={{ categ }}&search={{ search }}&sort=" method="get">
+            <span>Input the key word</span>
+            <label>
+                <input type="text" name="search" value="{{ search }}">
+            </label>
+            <button type="submit" class="btn btn-success">search</button>
+            <a type="button" class="btn btn-warning" href="?categ={{ categ }}&search=&sort={{ sort }}">
+                Clear
+            </a>
+        </form>
+    </li>
+</ul>

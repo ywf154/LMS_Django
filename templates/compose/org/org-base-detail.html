@@ -1,0 +1,25 @@
+  <!-- 机构基本信息-->
+    <div class="Detail">
+        <div class="Img">
+            <img src="{{ MEDIA_URL }}{{ org.image }}" alt="机构封面">
+        </div>
+        <div>
+            <div class="nameH50">
+                <h3>{{ org.name }}</h3>
+            </div>
+
+            <div class="H150">
+                <div>
+                    <h4>城市:<strong>{{ org.city }}</strong></h4>
+                    <h4>机构类别:<strong>{{ org.category.name }}</strong></h4>
+                    <h4>机构标签:<strong>{{ org.tag }}</strong></h4>
+                    <h4>机构地址:<strong>{{ org.address }}</strong></h4>
+                </div>
+                <div>
+                    <h4>课程数:<strong>{{ org.course_num }}</strong></h4>
+                    <h4>收藏数:<strong>{{ org.fav_nums }}</strong></h4>
+                    <h4>学习人数:<strong>{{ org.students }}</strong></h4>
+                </div>
+            </div>
+        </div>
+    </div>

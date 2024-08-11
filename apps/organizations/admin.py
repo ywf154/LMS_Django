@@ -1,9 +1,7 @@
 from django.contrib import admin
 from django.urls import reverse
 from django.utils.html import format_html
-from nested_admin.forms import SortableHiddenMixin
-from nested_admin.nested import NestedStackedInline
-
+from django.contrib.auth.models import Group
 from courses.models import Course
 from organizations.models import *
 
@@ -15,9 +13,9 @@ class TeacherInline(admin.StackedInline):
     extra = 0
 
 
-class CourseOrgAdmin(admin.ModelAdmin):
+class OrgAdmin(admin.ModelAdmin):
     inlines = [TeacherInline]
-    fields = ['image', 'name', 'city', 'category', ]
+    fields = ['image', 'name', 'city', 'category','desc' ]
     list_display = ('image_display', 'name', 'city', 'display_actions')
     search_fields = ('name', 'city')
 
@@ -27,11 +25,11 @@ class CourseOrgAdmin(admin.ModelAdmin):
     image_display.short_description = '机构封面'
 
     def display_actions(self, obj):
-        edit_url = reverse('admin:organizations_courseorg_change', args=[obj.pk])
-        delete_url = reverse('admin:organizations_courseorg_delete', args=[obj.pk])
+        edit_url = reverse('admin:organizations_org_change', args=[obj.pk])
+        delete_url = reverse('admin:organizations_org_delete', args=[obj.pk])
 
-        edit_button = format_html('<a href="{}" class="admin-edit-button">编辑</a>', edit_url)
-        delete_button = format_html('<a href="{}" class="admin-delete-button">删除</a>', delete_url)
+        edit_button = format_html('<a href="{}" class="admin-edit-button">update</a>', edit_url)
+        delete_button = format_html('<a href="{}" class="admin-delete-button">delete</a>', delete_url)
 
         return format_html('{}  {}', edit_button, delete_button)
 
@@ -44,7 +42,6 @@ class CityAdmin(admin.ModelAdmin):
 
 class CourseInline(admin.StackedInline):
     model = Course
-    # fields = ['image', 'org', 'name', 'desc', 'category', 'tag', 'youneed_know', 'detail']
     fields = ['name', 'image', 'org']
     extra = 0
 
@@ -57,8 +54,22 @@ class TeacherAdmin(admin.ModelAdmin):
     # raw_id_fields = ['user']
     autocomplete_fields = ['user']  # 这个需要在user的admin中添加搜索功能
 
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        user = obj.user
+        # 将用户添加到 'Teachers' 用户组
+        teachers_group, _ = Group.objects.get_or_create(name='Teachers')
+        user.groups.add(teachers_group)
+        user.is_staff = True
+        user.save()
 
-admin.site.register(CourseOrg, CourseOrgAdmin)
+
+class OrgCategAdmin(admin.ModelAdmin):
+    list_display = ['name']
+
+
+admin.site.register(Org, OrgAdmin)
+admin.site.register(OrgCategory, OrgCategAdmin)
 admin.site.register(City, CityAdmin)
 admin.site.register(Teacher, TeacherAdmin)
 

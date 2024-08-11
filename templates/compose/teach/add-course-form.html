@@ -1,0 +1,49 @@
+<!-- 弹出框触发按钮 -->
+<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal">
+    Create A New Course
+</button>
+
+<!-- 弹出框 -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Create A New Course</h4>
+            </div>
+            <div class="modal-body">
+                <form id="myForm" method="post">
+                    {% csrf_token %}
+                    {{ form }}
+                    <button id="submit" type="submit" class="btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#myForm').on('submit', function (event) {
+            event.preventDefault(); // 阻止默认的表单提交行为
+            // 获取表单数据
+            var formData = $(this).serialize();
+            // 发送 AJAX 请求
+            $.ajax({
+                url: $(this).attr('action'),
+                method: $(this).attr('method'),
+                data: formData,
+                success: function (response) {
+                    // 隐藏模态框
+                    $('#myModal').modal('hide');
+                    // 刷新原来的页面
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                }
+            });
+        });
+    });
+</script>

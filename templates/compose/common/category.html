@@ -1,0 +1,14 @@
+    <!-- ---------------------------------------类别 --------------------------------------->
+    <ul class="nav-list">
+        <li>Category</li>
+        <li {% if categ == '' %} class="active" {% endif %}>
+            <a href="?categ=&search={{ search }}&sort={{ sort }}">全部</a>
+        </li>
+        {% for cg in categs %}
+            <li {% if categ == cg.id|stringformat:"i" %} class="active" {% endif %}>
+                <a href="?categ={{ cg.id }}&search={{ search }}&sort={{ sort }}">
+                    {{ cg.name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>

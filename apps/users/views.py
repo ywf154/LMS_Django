@@ -1,38 +1,38 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import View
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
-
+from django.contrib import messages
 from courses.forms import CourseModelForm
-from courses.models import Course
+from courses.models import Course, CourseCategory
 from operations.models import UserCourse, UserFavorite
-from organizations.models import CourseOrg, Teacher
+from organizations.models import Org, Teacher
 from .forms import RegistrationForm, UserEditForm, ChangePwdForm, TeacherEditForm
 
 
 class UserEditView(View):
-    def get(self, request, *args, **kwargs):
-        form = UserEditForm(instance=request.user)
-        if request.user.teacher:
-            formTeacher = TeacherEditForm(instance=request.user.teacher)
-        return render(request, 'userEdit.html', locals())
-
     def post(self, request, *args, **kwargs):
-        form = UserEditForm(request.POST, instance=request.user)
-        if request.user.teacher:
-            formTeacher = TeacherEditForm(request.POST, instance=request.user.teacher, files=request.FILES)
-            if form.is_valid() and formTeacher.is_valid():
-                form.save()
-                formTeacher.save()
+        user_form = UserEditForm(request.POST, instance=request.user)
+        if user_form.is_valid():
+            user_form.save()
+            messages.success(request, 'You have updated information！')
+            return redirect('index')
+        messages.error(request, 'You have not updated any information')
+        return redirect('index')
 
-                return redirect('index')
-        else:
-            if form.is_valid():
-                form.save()
-                return redirect('index')
-        return render(request, 'userEdit.html', locals())
+
+class TeacherEditView(View):
+    def post(self, request, *args, **kwargs):
+        formTeacher = TeacherEditForm(request.POST, instance=request.user.teacher, files=request.FILES)
+        if request.user.is_authenticated and formTeacher.is_valid():
+            formTeacher.save()
+            messages.success(request, 'You have updated information！')
+            return redirect('teacherZoom')
+        messages.error(request, 'You have not updated any information')
+        return redirect('teacherZoom')
 
 
 class LoginView(View):
@@ -79,17 +79,8 @@ class RegisterView(View):
         return render(request, 'register.html', locals())
 
 
-class UserCenterView(View):
-    def get(self, request, *args, **kwargs):
-        return render(request, 'usercenter.html', locals())
-
-
 class ChangePasswordView(LoginRequiredMixin, View):
     login_url = '/login/'
-
-    def get(self, request, *args, **kwargs):
-        pwd_form = ChangePwdForm()
-        return render(request, 'ChangePassword.html', locals())
 
     def post(self, request, *args, **kwargs):
         pwd_form = ChangePwdForm(request.POST)
@@ -98,9 +89,11 @@ class ChangePasswordView(LoginRequiredMixin, View):
             user = request.user
             user.set_password(pwd1)
             user.save()
+            messages.success(request, 'You have changed your password！')
             return redirect('index')
         else:
-            return render(request, 'ChangePassword.html', locals())
+            messages.error(request, 'You have not changed your password！')
+            return redirect('index')
 
 
 class UserCourses(View):
@@ -113,7 +106,7 @@ class UserCourses(View):
 class Delete_course(View):
     def get(self, request, cid, *args, **kwargs):
         if cid:
-            UserCourse.objects.filter(course_id=cid, user_id=request.user.id).first().delete()
+            UserCourse.objects.filter(course_id=cid, user=request.user).first().delete()
             return redirect('userCourses')
         return JsonResponse({'status': 'error', 'msg': '删除失败'})
 
@@ -122,7 +115,7 @@ class UserFav(View):
     def get(self, request, *args, **kwargs):
         fav_orgs = UserFavorite.objects.filter(user_id=request.user.id, fav_type=1)
         fav_courses = UserFavorite.objects.filter(user=request.user, fav_type=2)
-        fav_orgs = [CourseOrg.objects.filter(id=CFav.fav_id).first() for CFav in fav_orgs]
+        fav_orgs = [Org.objects.filter(id=CFav.fav_id).first() for CFav in fav_orgs]
         fav_courses = [Course.objects.filter(id=OFav.fav_id).first() for OFav in fav_courses]
         return render(request, 'userFav.html', locals())
 
@@ -138,13 +131,34 @@ class DeleteFav(View):
 
 class TeacherZoom(View):
     def get(self, request, *args, **kwargs):
-        teacher = Teacher.objects.filter(user_id=request.user.id).first()
+        teacher = Teacher.objects.filter(user=request.user).first()
         if not teacher:
             return redirect('index')
-        name = teacher.name
-        # courses = Course.objects.filter(teacher_id=teacher.id).order_by('-add_time', 'status').all()
-        courses = Course.objects.filter(teacher_id=teacher.id).order_by('-status', '-add_time').all()
         form = CourseModelForm()
+        categs = CourseCategory.objects.all()
+
+        all_courses = Course.objects.filter(teacher_id=teacher.id).order_by('-status', '-add_time').all()
+
+        categ = request.GET.get('categ', '')
+        if categ:
+            all_courses = all_courses.filter(category_id=int(categ))
+        search = request.GET.get('search', '')
+        if search:
+            all_courses = all_courses.filter(name__contains=search)
+        # 排序
+        sort = request.GET.get('sort', '')
+        if sort == "students":
+            all_courses = all_courses.order_by("-students")
+        elif sort == "fav_nums":
+            all_courses = all_courses.order_by("-fav_nums")
+        course_list = Paginator(all_courses, 4)
+        pages = request.GET.get('page')
+        try:
+            courses = course_list.page(pages)
+        except EmptyPage:
+            courses = course_list.page(course_list.num_pages)
+        except PageNotAnInteger:
+            courses = course_list.page(1)
         return render(request, "teacher_zoom.html", locals())
 
     def post(self, request, *args, **kwargs):

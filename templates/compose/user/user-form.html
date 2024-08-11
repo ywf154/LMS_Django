@@ -1,0 +1,24 @@
+{% if data == 1 %}
+<li><a data-toggle="modal" data-target="#userFormModal" >Update Personal Information</a></li>
+{% else %}
+<!-- 弹出框 -->
+<div class="modal fade" id="userFormModal" tabindex="-1" role="dialog" aria-labelledby="userFormModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="userFormModal">Update Your Information</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'userEdit' %}">
+                    {% csrf_token %}
+                    {{ user_form }}
+                    <button id="submit" type="submit" class="btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}

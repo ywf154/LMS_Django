@@ -3,34 +3,11 @@
 {% block branch %}
     <div>
         <div class="right-card">
-            <div>
-                <h3><span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>通知列表</h3>
-            </div>
-            <ol>
-                {% for notice in notices %}
-                    <li style="color:#e11515;">{{ notice.title }}</li>
-                    <p style="color:#1556e1;">{{ notice.add_time }} </p>
-                    {{ notice.content|safe }}
-                {% endfor %}
-            </ol>
+            {% include 'compose/course/notice-list.html' %}
         </div>
         <div style="margin-left: 50px">
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="form-row">
-                    <strong>标题：</strong>{{ form.title }}
-                    <button type="submit" class="btn btn-primary">提交</button>
-                </div>
-                <div>
-                    {{ form.media }}
-                    {{ form.content }}
-                </div>
-            </form>
+            {% include 'compose/teach/notice-form.html' %}
         </div>
     </div>
-
-
-
-
 
 {% endblock %}

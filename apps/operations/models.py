@@ -14,7 +14,6 @@ class Banner(BaseModel):
     title = models.CharField(max_length=100, verbose_name="标题")
     image = models.ImageField(upload_to="banner/%Y/%m", max_length=200, verbose_name="轮播图")
     url = models.URLField(max_length=200, verbose_name="访问地址")
-    index = models.IntegerField(default=0, verbose_name="顺序")
 
     class Meta:
         verbose_name = "轮播图"
@@ -77,10 +76,9 @@ class UserCourse(BaseModel):
 
 
 class Task(BaseModel):
-    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name="学生", blank=True, null=True)
-    content = models.ForeignKey(Content, on_delete=models.CASCADE, verbose_name="所属章节", blank=True, null=True)
-    detail = UEditorField(verbose_name="课程编辑", default='', blank=True, imagePath='task/img/',
-                          toolbars="full", filePath='task/file/')
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name="学生")
+    content = models.ForeignKey(Content, on_delete=models.CASCADE, verbose_name="所属章节")
+    detail = UEditorField(verbose_name="课程编辑", default='', blank=True, imagePath='task/img/',toolbars="full", filePath='task/file/')
     grade = models.IntegerField(verbose_name="成绩", default=0)
 
     class Meta:

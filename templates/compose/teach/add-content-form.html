@@ -1,0 +1,30 @@
+
+<button type="button"
+        class="btn btn-success btn-lg"
+        data-toggle="modal" data-target="#add_contentModal">
+    Create A Content
+</button>
+
+
+<div class="modal fade" id="add_contentModal" tabindex="-1" role="dialog" aria-labelledby="add_contentModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="add_contentModalLabel">Are you sure?</h4>
+            </div>
+            <form method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    {% csrf_token %}
+                    {{ form }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary"> Create</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

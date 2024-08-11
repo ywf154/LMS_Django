@@ -1,0 +1,13 @@
+{% if user.teacher and request.path|slice:":8" == "/teacher" %}
+    <li{% if request.path|slice:":7" == "/Course" %} class="active" {% endif %}>
+    {% include 'compose/teach/teacher-modal.html' with data=1 %}
+    </li>
+    <li{% if request.path|slice:":8" == "/teacher" %} class="active" {% endif %}>
+        <a href="{% url 'teacherZoom' %}">
+            <span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span>My Courses
+        </a>
+    </li>
+    <li>
+           <a><span>Hello! {{ user.teacher.name }}</span></a>
+    </li>
+{% endif %}

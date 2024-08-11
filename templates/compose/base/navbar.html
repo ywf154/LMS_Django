@@ -1,0 +1,82 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Learning System Management</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li {% if request.path|slice:":4" == "/Org" %} class="active" {% endif %}>
+                        <a href="{% url 'OrganizationsView' %}">
+                            <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>&nbsp;
+                            Organizations
+                        </a>
+                    </li>
+                    <li{% if request.path|slice:":7" == "/Course" %} class="active" {% endif %}>
+                        <a href="{% url 'CourseList' %}">
+                            <span class="glyphicon glyphicon-book" aria-hidden="true"></span>&nbsp;
+                            Courses
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">
+                            <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>&nbsp;
+                            Learning Space
+                        </a>
+                        <ul class="dropdown-menu">
+                            {% include 'compose/base/for-teacher.html' with data=1 %}
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{% url 'userCourses' %}">My Classes</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{% url 'userFav' %}">My Favorite</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        {% include 'compose/base/userNotice.html' %}
+                    </li>
+                    {% include 'compose/teach/navbar.html' %}
+
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <img src="{{ MEDIA_URL }}{{ user.image }}" class="card-img-top" style="width: 40px;height: 40px;margin-top: 5px" alt="头像">
+                </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false"><span class="glyphicon glyphicon-user"
+                                                       aria-hidden="true"></span>{{ user.username }}
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            {% include 'compose/user/user-form.html' with data=1 %}
+                            {% include 'compose/user/changePWD.html' with data=1 %}
+
+
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/admin/">Admin View</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{% url 'logout' %}">Log out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+        </div>
+    </div>
+</nav>
+{#弹窗：#}
+{% include 'compose/base/for-teacher.html' %}
+{% include 'compose/user/user-form.html' %}
+{% include 'compose/common/msg.html' %}
+{% include 'compose/user/changePWD.html' %}
+{% include 'compose/teach/teacher-modal.html' %}
+
+
+
+

@@ -1,36 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'compose/base/layout.html' %}
 {% block title %}我的消息{% endblock %}
 {% block content %}
-    <div>
-        <a href="/">
-            <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>返回</a>
-    </div>
+    {% include 'compose/common/back-to-url.html' with url='index' %}
+    {% include 'compose/user/history-message-list.html' %}
+    <div style="margin-left: 50px;margin-top: 20px">
+        {% include 'compose/user/message-list.html' %}
 
-    <h1>未读消息</h1>
-    <div class="ListCard">
-        {% for notice in notice_list %}
-
-            <div>
-                <a href="{% url 'readMessage' notice.id %}">
-                    <h2>{{ notice.course }}</h2>
-                    <p>发送时间：<strong>{{ notice.add_time }}</strong></p>
-                    <h4>标题：<strong>{{ notice.title }}</strong></h4>
-                    <p>内容：{{ notice.content|safe }}</p>
-                </a>
-            </div>
-        {% endfor %}
-    </div>
-    <h1>已读消息</h1>
-    <div class="ListCard">
-        {% for notice in notice_list_has_read %}
-
-            <div>
-                    <h2>{{ notice.course }}</h2>
-                    <p>发送时间：<strong>{{ notice.add_time }}</strong></p>
-                    <h4>标题：<strong>{{ notice.title }}</strong></h4>
-                    <p>内容：{{ notice.content|safe }}</p>
-            </div>
-        {% endfor %}
     </div>
 
 

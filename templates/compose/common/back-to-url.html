@@ -1,0 +1,13 @@
+<a type="button" class="btn btn-default btn-{% if lg == 1 %}lg{% endif %}"
+        {% if data %}
+   href="{% url url data %}"
+        {% else %}
+   href="{% url url %}"
+        {% endif %}
+><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>Back
+</a>
+<style>
+    .btn btn-default {
+        font-size: 20px;
+    }
+</style>

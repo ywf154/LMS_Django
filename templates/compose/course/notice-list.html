@@ -1,0 +1,15 @@
+{##}
+{#接受参数：notices 列表#}
+{##}
+<div>
+    <h3><span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>通知列表</h3>
+</div>
+<ol>
+    {% for notice in notices reversed  %}
+        <li style="color:#e11515;">{{ notice.title }}</li>
+        <p style="color:#1556e1;">{{ notice.add_time }} </p>
+        {{ notice.content|safe }}
+    {% endfor %}
+</ol>
+
+{#reversed#}
